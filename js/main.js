@@ -225,11 +225,11 @@ let PHONE = '966000000000';
   // ───────────────────────────────────────────────────────────
   // CURRENCY ENGINE
   // All prices in data-price / chatFlow are stored as a base SAR
-  // number. Each demo link is for ONE specific business whose
-  // country is already known (BARBER_DATA.country in data.json),
-  // so currency is driven by that — not by guessing the visitor's
-  // location. A Libyan barbershop's demo always shows LYD prices,
-  // regardless of who's viewing it.
+  // number. The same demo link gets sent to leads across many
+  // countries, so we detect the VISITOR's country by IP and
+  // convert + relabel every price shown (LYD for Libya, EGP for
+  // Egypt, MAD for Morocco, etc.), defaulting to SAR if detection
+  // fails or the country isn't in the table.
   // ───────────────────────────────────────────────────────────
   var CURRENCY_TABLE = {
     SA: { code: 'SAR', ar: '\u0631\u064A\u0627\u0644',        en: 'SAR', rate: 1,    decimals: 0 },
@@ -247,43 +247,9 @@ let PHONE = '966000000000';
     IQ: { code: 'IQD', ar: '\u062F\u064A\u0646\u0627\u0631',  en: 'IQD', rate: 350,  decimals: 0 }
   };
 
-  // Maps the free-text "country" field in data.json (which may be
-  // written in English or Arabic, with different spellings) to a
-  // currency-table key. Add more aliases here as new countries are added.
-  var COUNTRY_NAME_TO_CODE = {
-    'libya': 'LY', 'libye': 'LY', '\u0644\u064A\u0628\u064A\u0627': 'LY',
-    'saudi arabia': 'SA', 'saudi': 'SA', 'ksa': 'SA', '\u0627\u0644\u0633\u0639\u0648\u062F\u064A\u0629': 'SA',
-    'egypt': 'EG', '\u0645\u0635\u0631': 'EG',
-    'morocco': 'MA', '\u0627\u0644\u0645\u0641\u0631\u0628': 'MA',
-    'uae': 'AE', 'united arab emirates': 'AE', '\u0627\u0644\u0625\u0645\u0627\u0631\u0627\u062A': 'AE',
-    'qatar': 'QA', '\u0642\u0637\u0631': 'QA',
-    'kuwait': 'KW', '\u0627\u0644\u0643\u0648\u064A\u062A': 'KW',
-    'bahrain': 'BH', '\u0627\u0644\u0628\u062D\u0631\u064A\u0646': 'BH',
-    'oman': 'OM', '\u0639\u0645\u0627\u0646': 'OM',
-    'jordan': 'JO', '\u0627\u0644\u0623\u0631\u062F\u0646': 'JO',
-    'tunisia': 'TN', '\u062A\u0648\u0646\u0633': 'TN',
-    'algeria': 'DZ', '\u0627\u0644\u062C\u0632\u0627\u0626\u0631': 'DZ',
-    'iraq': 'IQ', '\u0627\u0644\u0639\u0631\u0627\u0642': 'IQ'
-  };
-
   var DEFAULT_COUNTRY = 'SA';
   var activeCurrency = CURRENCY_TABLE[DEFAULT_COUNTRY];
   var activeCountry = DEFAULT_COUNTRY;
-
-  // Called from applyBarberData() once BARBER_DATA.country is known.
-  function setCurrencyFromCountryName(countryName) {
-    if (!countryName) return;
-    var code = COUNTRY_NAME_TO_CODE[String(countryName).trim().toLowerCase()];
-    if (code && CURRENCY_TABLE[code]) {
-      activeCountry = code;
-      activeCurrency = CURRENCY_TABLE[code];
-    } else {
-      console.log('Unknown country in data.json, defaulting to SAR:', countryName);
-      activeCountry = DEFAULT_COUNTRY;
-      activeCurrency = CURRENCY_TABLE[DEFAULT_COUNTRY];
-    }
-    refreshAllPriceDisplays();
-  }
 
   // Convert a base-SAR price (or "30-50-120" multi-tier string)
   // into the visitor's currency, formatted as a display string.
@@ -308,8 +274,26 @@ let PHONE = '966000000000';
     return typeof price === 'string' && price.indexOf('-') !== -1 && /^\d+(-\d+)+$/.test(price);
   }
 
-  // (Currency is set from BARBER_DATA.country in applyBarberData(),
-  // once data.json has loaded — see setCurrencyFromCountryName above.)
+  // Detect visitor country by IP (best-effort, fails silently to default).
+  // Same demo link is sent to leads across many countries, so currency
+  // must follow the viewer, not a fixed value baked into data.json.
+  function detectCountryAndApplyCurrency() {
+    return fetch('https://ipapi.co/json/')
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        var cc = data && data.country_code;
+        if (cc && CURRENCY_TABLE[cc]) {
+          activeCountry = cc;
+          activeCurrency = CURRENCY_TABLE[cc];
+        }
+      })
+      .catch(function (err) {
+        console.log('IP geolocation failed, using default currency:', err);
+      })
+      .then(function () {
+        refreshAllPriceDisplays();
+      });
+  }
 
   // Re-render every price already on the page in the active currency.
   // Called once on load (after detection) and again on language toggle.
@@ -336,6 +320,121 @@ let PHONE = '966000000000';
     });
   }
 
+  // ── THEME & COLOR PICKER ──────────────────────────────────
+  // Lets a lead try the site in a different palette and send back
+  // either the theme name or a hex code of a custom color they liked.
+  function initThemePicker() {
+    var toggle = document.getElementById('themePickerToggle');
+    var panel = document.getElementById('themePickerPanel');
+    var closeBtn = document.getElementById('themePickerClose');
+    var swatchBtns = document.querySelectorAll('.theme-swatch-btn');
+    var colorInput = document.getElementById('customColorInput');
+    var hexDisplay = document.getElementById('customColorHex');
+    var copyBtn = document.getElementById('customColorCopy');
+    if (!toggle || !panel) return;
+
+    // Restore a previously chosen theme/color for this visitor (per-browser only)
+    try {
+      var savedTheme = localStorage.getItem('demoTheme');
+      var savedColor = localStorage.getItem('demoCustomColor');
+      if (savedColor) {
+        applyCustomColor(savedColor);
+        if (colorInput) colorInput.value = savedColor;
+        if (hexDisplay) hexDisplay.textContent = savedColor.toUpperCase();
+      } else if (savedTheme) {
+        applyTheme(savedTheme);
+      }
+      markActiveSwatch(savedTheme);
+    } catch (e) { /* localStorage may be blocked; fall back to defaults silently */ }
+
+    toggle.addEventListener('click', function () {
+      panel.hidden = !panel.hidden;
+    });
+    closeBtn.addEventListener('click', function () { panel.hidden = true; });
+
+    document.addEventListener('click', function (e) {
+      if (!panel.hidden && !panel.contains(e.target) && e.target !== toggle && !toggle.contains(e.target)) {
+        panel.hidden = true;
+      }
+    });
+
+    swatchBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var theme = btn.getAttribute('data-theme');
+        applyTheme(theme);
+        markActiveSwatch(theme);
+        try {
+          localStorage.setItem('demoTheme', theme);
+          localStorage.removeItem('demoCustomColor');
+        } catch (e) {}
+      });
+    });
+
+    if (colorInput) {
+      colorInput.addEventListener('input', function () {
+        var hex = colorInput.value;
+        applyCustomColor(hex);
+        if (hexDisplay) hexDisplay.textContent = hex.toUpperCase();
+        markActiveSwatch(null);
+        try { localStorage.setItem('demoCustomColor', hex); } catch (e) {}
+      });
+    }
+
+    if (copyBtn) {
+      copyBtn.addEventListener('click', function () {
+        var hex = hexDisplay ? hexDisplay.textContent : '';
+        navigator.clipboard.writeText(hex).then(function () {
+          copyBtn.classList.add('copied');
+          var original = copyBtn.textContent;
+          copyBtn.textContent = currentLang === 'ar' ? '\u2713 \u062A\u0645' : '\u2713 Copied';
+          setTimeout(function () {
+            copyBtn.classList.remove('copied');
+            copyBtn.textContent = original;
+          }, 1500);
+        }).catch(function () {
+          console.log('Clipboard write failed; hex shown is:', hex);
+        });
+      });
+    }
+
+    function markActiveSwatch(theme) {
+      swatchBtns.forEach(function (b) {
+        b.classList.toggle('active', b.getAttribute('data-theme') === theme);
+      });
+    }
+  }
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme === 'emerald' ? 'emerald' : 'gold');
+    document.documentElement.removeAttribute('data-custom-accent');
+  }
+
+  // Derives a lighter tint + a dim/translucent version of a custom
+  // hex color, so the picked color slots into the same 3-variable
+  // system (--gold / --gold-light / --gold-dim) the whole site uses.
+  function applyCustomColor(hex) {
+    var rgb = hexToRgb(hex);
+    if (!rgb) return;
+    var lightHex = lightenHex(hex, 0.28);
+    document.documentElement.style.setProperty('--custom-accent', hex);
+    document.documentElement.style.setProperty('--custom-accent-light', lightHex);
+    document.documentElement.style.setProperty('--custom-accent-dim', 'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',0.15)');
+    document.documentElement.setAttribute('data-custom-accent', 'true');
+  }
+
+  function hexToRgb(hex) {
+    var m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return m ? { r: parseInt(m[1], 16), g: parseInt(m[2], 16), b: parseInt(m[3], 16) } : null;
+  }
+
+  function lightenHex(hex, amount) {
+    var rgb = hexToRgb(hex);
+    if (!rgb) return hex;
+    var lighten = function (c) { return Math.round(c + (255 - c) * amount); };
+    var toHex = function (c) { return c.toString(16).padStart(2, '0'); };
+    return '#' + toHex(lighten(rgb.r)) + toHex(lighten(rgb.g)) + toHex(lighten(rgb.b));
+  }
+
   function applyLang() {
     document.documentElement.lang = currentLang;
     document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
@@ -357,8 +456,12 @@ let PHONE = '966000000000';
     applyLang();
   });
 
-  // (Currency is now set per-business from data.json's country
-  // field, inside applyBarberData() — see top of this file.)
+  // Detect the visitor's country by IP and switch currency to match —
+  // the same demo link is sent to leads across many countries, so
+  // currency should follow whoever is looking at it right now.
+  detectCountryAndApplyCurrency();
+
+  initThemePicker();
 
   var hamburger = document.getElementById('hamburger');
   var mobileMenu = document.getElementById('mobileMenu');
@@ -1501,11 +1604,9 @@ let PHONE = '966000000000';
 
 function applyBarberData(){
 
-// CURRENCY: this demo is for one specific business in one specific
-// country (BARBER_DATA.country, from data.json) — so prices show in
-// that country's currency, not the visitor's. Must run before any
-// price gets rendered below.
-setCurrencyFromCountryName(BARBER_DATA.country);
+// CURRENCY is handled separately by detectCountryAndApplyCurrency(),
+// based on the *visitor's* IP — not this business's own country —
+// since the same demo link is sent to leads in many different countries.
 
 // DYNAMIC GALLERY + shared images array (used by hero image below too)
 const gallery =
@@ -1559,6 +1660,31 @@ if(gallery){
 
   gallery.innerHTML = "";
 
+  let loadedCount = 0;
+  let checkedCount = 0;
+  const totalToCheck = demoImages.length;
+  const gallerySection = document.getElementById("gallery");
+
+  function finalizeGalleryVisibility(){
+    if(checkedCount < totalToCheck) return; // still waiting on some images
+    if(loadedCount === 0 && gallerySection){
+      // No usable photos at all (common with expired Google Maps links)
+      // — hide the whole section instead of showing an empty grid.
+      gallerySection.style.display = "none";
+      // Nav links are plain <a href="#gallery"> tags (no <li> wrapper
+      // in this template), so hiding the anchor itself is enough.
+      document.querySelectorAll('a[href="#gallery"]').forEach(el => {
+        el.style.display = "none";
+      });
+    } else if(gallerySection){
+      gallerySection.style.display = "";
+    }
+  }
+
+  if(totalToCheck === 0){
+    finalizeGalleryVisibility();
+  }
+
   // CREATE ITEMS
   demoImages.forEach((img, index) => {
 
@@ -1578,11 +1704,19 @@ if(gallery){
     const image =
       item.querySelector("img");
 
+    image.onload = () => {
+      loadedCount++;
+      checkedCount++;
+      finalizeGalleryVisibility();
+    };
+
     image.onerror = () => {
 
       console.log("Image failed:", img);
 
       item.style.display = "none";
+      checkedCount++;
+      finalizeGalleryVisibility();
 
     };
 
@@ -1627,19 +1761,32 @@ if(gallery){
       BARBER_DATA.address || "";
   }
 
-  // HERO IMAGE
+  // HERO IMAGE — show the photo if we have one and it actually loads;
+  // otherwise show the designed fallback pattern (never a blank/broken image).
   const heroImg =
     document.querySelector(".hero-img");
+  const heroBg =
+    document.querySelector(".hero-bg");
+
+  function showHeroFallback(){
+    if(heroImg) heroImg.classList.add("is-hidden");
+    if(heroBg) heroBg.classList.add("no-image");
+  }
 
   if(heroImg && demoImages.length){
 
-    heroImg.src =
-      demoImages[0];
-
-    heroImg.onerror = () => {
-      heroImg.src =
-        "fallback.jpg";
+    heroImg.onload = () => {
+      heroImg.classList.remove("is-hidden");
+      if(heroBg) heroBg.classList.remove("no-image");
     };
+
+    heroImg.onerror = showHeroFallback;
+
+    heroImg.src = demoImages[0];
+
+  } else {
+
+    showHeroFallback();
 
   }
 

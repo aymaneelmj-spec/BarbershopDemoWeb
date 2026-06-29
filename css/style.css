@@ -17,6 +17,30 @@
   --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* THEME 2 — "Emerald" — a classic old-world barbershop palette:
+   deep green + brass, instead of black + gold. Toggled via
+   <html data-theme="emerald">. Everything below is derived the
+   same way theme 1 is, so the whole site re-skins automatically. */
+html[data-theme="emerald"] {
+  --black: #07120E;
+  --dark: #0E1C16;
+  --card: #14271F;
+  --border: #234234;
+  --gold: #C7A86B;
+  --gold-light: #E0C892;
+  --gold-dim: rgba(199,168,107,0.15);
+  --cream: #F2EFE6;
+}
+
+/* CUSTOM ACCENT — when a lead picks their own color in the color
+   picker, we only override the 3 accent variables (not the whole
+   palette), so any base theme still looks coherent underneath it. */
+html[data-custom-accent="true"] {
+  --gold: var(--custom-accent, #C9A84C);
+  --gold-light: var(--custom-accent-light, #E8C96A);
+  --gold-dim: var(--custom-accent-dim, rgba(201,168,76,0.15));
+}
+
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 html {
@@ -397,6 +421,22 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   position: absolute;
   inset: 0;
   z-index: 0;
+  background: var(--black);
+}
+
+/* Fallback pattern shown when no working photo is available
+   (common with scraped Google Maps photo links, which expire).
+   A subtle barber-pole diagonal weave + radial glow in the
+   theme's accent color, so the hero never looks "broken" or empty. */
+.hero-bg.no-image {
+  background:
+    radial-gradient(circle at 30% 20%, var(--gold-dim) 0%, transparent 55%),
+    radial-gradient(circle at 80% 75%, var(--gold-dim) 0%, transparent 50%),
+    repeating-linear-gradient(
+      135deg,
+      var(--dark) 0px, var(--dark) 28px,
+      var(--card) 28px, var(--card) 56px
+    );
 }
 
 .hero-img {
@@ -404,8 +444,11 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   height: 100%;
   object-fit: cover;
   object-position: center;
+  transition: opacity 0.4s ease;
+}
 
- <img class="hero-img">
+.hero-img.is-hidden {
+  opacity: 0;
 }
 
 .hero-overlay {
@@ -1469,6 +1512,145 @@ footer {
   .tiktok-float { bottom: calc(1.2rem + 50px + 12px); left: 1.2rem; width: 50px; height: 50px; }
   .tiktok-float svg { width: 22px; height: 22px; }
 }
+
+/* ===== THEME & COLOR PICKER WIDGET ===== */
+.theme-picker {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 950;
+}
+
+.theme-picker-toggle {
+  width: 56px; height: 56px;
+  background: var(--card);
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; padding: 0;
+  color: var(--gold);
+  box-shadow: 0 4px 20px var(--gold-dim);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.theme-picker-toggle:hover { transform: scale(1.1) rotate(15deg); box-shadow: 0 6px 30px var(--gold-dim); }
+
+.theme-picker-panel {
+  position: absolute;
+  bottom: calc(56px + 14px);
+  right: 0;
+  width: 280px;
+  background: var(--dark);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  animation: themePanelIn 0.25s ease-out both;
+}
+
+@keyframes themePanelIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.theme-picker-panel[hidden] { display: none; }
+
+.theme-picker-header {
+  display: flex; align-items: center; justify-content: space-between;
+  font-weight: 800; color: var(--cream);
+  margin-bottom: 0.5rem;
+}
+
+.theme-picker-close {
+  background: none; border: none; color: var(--muted);
+  font-size: 1rem; cursor: pointer; line-height: 1;
+  padding: 0.2rem;
+}
+.theme-picker-close:hover { color: var(--cream); }
+
+.theme-picker-sub {
+  font-size: 0.82rem; color: var(--muted);
+  margin: 0.85rem 0 0.6rem;
+}
+
+.theme-picker-themes {
+  display: flex; gap: 0.6rem;
+}
+
+.theme-swatch-btn {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.4rem;
+  cursor: pointer;
+  font-size: 0.75rem;
+  color: var(--cream);
+  font-family: var(--font-ar);
+  transition: border-color var(--transition);
+}
+.theme-swatch-btn:hover, .theme-swatch-btn.active { border-color: var(--gold); }
+
+.theme-swatch {
+  display: block;
+  width: 100%; height: 32px;
+  border-radius: 6px;
+}
+
+.theme-picker-custom {
+  display: flex; align-items: center; gap: 0.5rem;
+}
+
+.theme-picker-custom input[type="color"] {
+  width: 36px; height: 36px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.theme-picker-hex {
+  flex: 1;
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: var(--gold-light);
+  background: var(--card);
+  padding: 0.45rem 0.6rem;
+  border-radius: 6px;
+  text-align: center;
+  letter-spacing: 0.03em;
+}
+
+.theme-picker-copy {
+  background: var(--gold);
+  color: var(--black);
+  border: none;
+  border-radius: 6px;
+  padding: 0.45rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: var(--font-ar);
+  transition: background var(--transition);
+}
+.theme-picker-copy:hover { background: var(--gold-light); }
+.theme-picker-copy.copied { background: #4caf50; color: white; }
+
+.theme-picker-hint {
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-top: 0.85rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+  .theme-picker { bottom: 1.2rem; right: 1.2rem; }
+  .theme-picker-toggle { width: 50px; height: 50px; }
+  .theme-picker-panel { width: calc(100vw - 2.4rem); right: -0.2rem; }
+}
+
 
 
 

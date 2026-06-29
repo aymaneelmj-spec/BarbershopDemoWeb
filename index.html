@@ -208,7 +208,7 @@
 
 <section class="hero" id="home" role="banner">
   <div class="hero-bg">
-    <img src="" alt="صالون حلاقة" class="hero-img" fetchpriority="high" loading="eager" onerror="this.style.opacity='0'">
+    <img src="" alt="صالون حلاقة" class="hero-img" fetchpriority="high" loading="eager">
     <div class="hero-overlay"></div>
   </div>
   <div class="hero-content">
@@ -1189,6 +1189,44 @@
   </div>
 </div>
 <!-- ===== END PAYMENT MODAL ===== -->
+
+<!-- ===== THEME & COLOR PICKER WIDGET ===== -->
+<div class="theme-picker" id="themePicker">
+  <button class="theme-picker-toggle" id="themePickerToggle" type="button" aria-label="Customize colors" data-ar="تخصيص الألوان" data-en="Customize Colors">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 21a9 9 0 1 1 0-18c4.97 0 9 3.5 9 7.5 0 1.93-1.57 3.5-3.5 3.5h-1.78c-.78 0-1.43.65-1.43 1.43 0 .35.13.66.35.91.22.25.35.56.35.91A2.25 2.25 0 0 1 12.69 21H12Z"/></svg>
+  </button>
+
+  <div class="theme-picker-panel" id="themePickerPanel" hidden>
+    <div class="theme-picker-header">
+      <span data-ar="جرّب الألوان" data-en="Try Colors">جرّب الألوان</span>
+      <button class="theme-picker-close" id="themePickerClose" type="button" aria-label="Close">✕</button>
+    </div>
+
+    <p class="theme-picker-sub" data-ar="اختر شكل الموقع كما تريده" data-en="Pick how you want the site to look">اختر شكل الموقع كما تريده</p>
+
+    <div class="theme-picker-themes">
+      <button class="theme-swatch-btn" data-theme="gold" type="button">
+        <span class="theme-swatch" style="background:linear-gradient(135deg,#080808,#C9A84C)"></span>
+        <span data-ar="ذهبي" data-en="Gold">ذهبي</span>
+      </button>
+      <button class="theme-swatch-btn" data-theme="emerald" type="button">
+        <span class="theme-swatch" style="background:linear-gradient(135deg,#07120E,#C7A86B)"></span>
+        <span data-ar="زمردي" data-en="Emerald">زمردي</span>
+      </button>
+    </div>
+
+    <p class="theme-picker-sub" data-ar="أو اختر لونك الخاص" data-en="Or pick your own color">أو اختر لونك الخاص</p>
+
+    <div class="theme-picker-custom">
+      <input type="color" id="customColorInput" value="#C9A84C" aria-label="Custom accent color">
+      <code class="theme-picker-hex" id="customColorHex">#C9A84C</code>
+      <button class="theme-picker-copy" id="customColorCopy" type="button" data-ar="نسخ الكود" data-en="Copy Code">نسخ الكود</button>
+    </div>
+
+    <p class="theme-picker-hint" data-ar="📸 خذ لقطة شاشة أو أرسل لنا الكود ليصبح هذا تصميم موقعك" data-en="📸 Screenshot this or send us the code to make this your site's design">📸 خذ لقطة شاشة أو أرسل لنا الكود ليصبح هذا تصميم موقعك</p>
+  </div>
+</div>
+<!-- ===== END THEME & COLOR PICKER WIDGET ===== -->
 
 <script src="js/main.js" charset="utf-8"></script>
 </body>
