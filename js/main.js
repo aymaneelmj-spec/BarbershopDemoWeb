@@ -8,13 +8,19 @@ const params = new URLSearchParams(window.location.search);
 
 const barberId = params.get("id") || 0;
 
-// Which city/dataset file to load. Defaults to data.json so every
+// Which city/dataset file to load. Defaults to data.json (root) so every
 // link already sent out keeps working exactly as before; pass
-// ?file=damman.json or ?file=jeddah.json to pull from those instead.
-const KNOWN_DATA_FILES = ["data.json", "damman.json", "jeddah.json"];
+// ?file=damman.json or ?file=jeddah.json to pull that file from the
+// /data folder instead. Any filename works now — no need to hardcode
+// a list every time you add a new city.
 const fileParam = params.get("file");
-const DATA_FILE = (fileParam && KNOWN_DATA_FILES.indexOf(fileParam) !== -1)
-  ? fileParam
+
+// sanitize: only letters, numbers, dash, underscore, dot allowed —
+// blocks path traversal like "../../secret.json"
+const isSafeFileName = fileParam && /^[a-zA-Z0-9_\-]+\.json$/.test(fileParam);
+
+const DATA_FILE = isSafeFileName
+  ? "data/" + fileParam
   : "data.json";
 
 let BARBER_DATA = null;
