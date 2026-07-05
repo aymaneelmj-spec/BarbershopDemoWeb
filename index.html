@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+  <!-- dynamic <title>, <meta> will be updated by script -->
   <title> للإسترخاء | Barber Shop - </title>
   <meta name="description" content=" للإسترخاء - أفضل صالون حلاقة ومساج في . خدمات حلاقة VIP، حمام مغربي، مساج استرخاء. مفتوح 24 ساعة. احجز الآن عبر واتساب.">
   <meta name="keywords" content=", صالون حلاقة , حمام مغربي, مساج استرخاء, barber shop, barber shop madinah, حلاقة VIP, حمام ملكي, مساج">
@@ -35,7 +36,8 @@
   <meta name="twitter:description" content="أفضل صالون حلاقة ومساج في . مفتوح 24 ساعة.">
   <meta name="twitter:image" content="https://demobarber.com/images/mainbackground.jpg">
 
-  <script type="application/ld+json">
+  <!-- Schema.org will be updated by script -->
+  <script type="application/ld+json" id="schemaOrg">
   {
     "@context": "https://schema.org",
     "@type": "HairSalon",
@@ -906,7 +908,7 @@
       <div class="contact-card">
         <div class="contact-icon">📞</div>
         <h3 data-ar="اتصل بنا" data-en="Call Us">اتصل بنا</h3>
-        <a href="tel:+966000000000" class="contact-link">+966 00 000 0000</a>
+        <a href="tel:+966000000000" class="contact-link" id="contactPhoneLink">+966 00 000 0000</a>
       </div>
       <div class="contact-card">
         <div class="contact-icon">💬</div>
@@ -1227,6 +1229,185 @@
   </div>
 </div>
 <!-- ===== END THEME & COLOR PICKER WIDGET ===== -->
+
+<!-- ===== DYNAMIC DATA LOADING SCRIPT ===== -->
+<script>
+(function() {
+  // ----- Utility: get URL params -----
+  function getParam(name) {
+    const url = new URL(window.location);
+    return url.searchParams.get(name);
+  }
+
+  const id = getParam('id');
+  let file = getParam('file');
+  if (!file) file = 'master.json'; // default
+
+  if (id === null) {
+    // No ID provided – keep static content
+    return;
+  }
+
+  // ----- Fetch and apply data -----
+  const jsonPath = `data/${file}`;
+
+  fetch(jsonPath)
+    .then(res => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+      return res.json();
+    })
+    .then(data => {
+      const biz = data.find(b => b.id == id);
+      if (!biz) {
+        console.warn(`Business with ID ${id} not found in ${file}`);
+        return;
+      }
+
+      // ----- Helper: update text content of elements by selector -----
+      function updateText(selector, text) {
+        const el = document.querySelector(selector);
+        if (el) el.textContent = text;
+      }
+
+      // ----- Update page -----
+      const name = biz.name || 'صالون حلاقة';
+      const phone = biz.phone || '+966000000000';
+      const address = biz.address || 'العنوان غير متوفر';
+      const city = biz.city || '';
+      const niche = biz.niche || 'Barbershop';
+
+      // Title & Meta
+      document.title = `${name} | Barber Shop`;
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) metaDesc.content = `${name} - أفضل صالون حلاقة ومساج في ${city}. خدمات حلاقة VIP، حمام مغربي، مساج استرخاء. مفتوح 24 ساعة.`;
+      const metaKeywords = document.querySelector('meta[name="keywords"]');
+      if (metaKeywords) metaKeywords.content = `${name}, صالون حلاقة ${city}, حمام مغربي, مساج استرخاء, barber shop, حلاقة VIP`;
+      const ogTitle = document.querySelector('meta[property="og:title"]');
+      if (ogTitle) ogTitle.content = `${name} | Barber Shop`;
+      const ogDesc = document.querySelector('meta[property="og:description"]');
+      if (ogDesc) ogDesc.content = `أفضل صالون حلاقة ومساج في ${city}. حمام مغربي، مساج استرخاء، حلاقة VIP. مفتوح 24 ساعة.`;
+
+      // Schema.org update
+      const schemaScript = document.getElementById('schemaOrg');
+      if (schemaScript) {
+        try {
+          const schema = JSON.parse(schemaScript.textContent);
+          schema.name = name;
+          schema.alternateName = name;
+          schema.description = `أفضل صالون حلاقة ومساج في ${city}. خدمات حلاقة VIP، حمام مغربي، مساج استرخاء.`;
+          if (schema.address) {
+            schema.address.streetAddress = address;
+            schema.address.addressLocality = city;
+          }
+          schema.telephone = phone;
+          schema.hasMap = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+          schema.image = biz.demo_url ? biz.demo_url.split('images=')[1]?.split(',')[0] : schema.image;
+          schemaScript.textContent = JSON.stringify(schema, null, 2);
+        } catch (e) { /* ignore */ }
+      }
+
+      // Hero
+      const heroTitle = document.querySelector('.hero-title');
+      if (heroTitle) heroTitle.textContent = name;
+      const heroSub = document.querySelector('.hero-sub');
+      if (heroSub) heroSub.textContent = niche === 'Barbershop' ? 'صالون حلاقة احترافي' : niche;
+
+      // About
+      const aboutDesc = document.querySelector('.about-desc');
+      if (aboutDesc) {
+        aboutDesc.textContent = `${name} هو وجهتك الأولى للعناية بنفسك. نقدم خدمات حلاقة فاخرة، مساج احترافي، وحمام مغربي أصيل على أيدي خبراء متخصصين.`;
+      }
+
+      // Contact
+      const addressEl = document.querySelector('.contact-card:first-child p');
+      if (addressEl) addressEl.textContent = address;
+      const phoneLink = document.getElementById('contactPhoneLink');
+      if (phoneLink) {
+        phoneLink.textContent = phone;
+        phoneLink.href = `tel:${phone}`;
+      }
+
+      // WhatsApp buttons and links – update all buttons that use the phone
+      function updateWhatsAppLinks(phoneNumber) {
+        const buttons = [
+          '#openChatBtn',
+          '#whatsappFloat',
+          '#footerWaBtn',
+          '#whatsappContactLink',
+          '.btn-book-service',
+          '.price-row',
+          '.platform-opt-whatsapp'
+        ];
+        // Also the booking chat button
+        const chatBtn = document.querySelector('#booking .btn-primary');
+        if (chatBtn) {
+          chatBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const url = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=مرحباً، أريد حجز موعد`;
+            window.open(url, '_blank');
+          });
+        }
+        // All elements that should trigger WhatsApp
+        document.querySelectorAll('[data-wa-phone]').forEach(el => {
+          // Already have attribute, but we set it dynamically
+        });
+        // Override click for the main WhatsApp buttons
+        document.querySelectorAll('#openChatBtn, #whatsappFloat, #footerWaBtn, #whatsappContactLink').forEach(btn => {
+          btn.onclick = function(e) {
+            e.preventDefault();
+            const cleanPhone = phoneNumber.replace(/[^0-9]/g, '');
+            const message = encodeURIComponent('مرحباً، أريد حجز موعد');
+            window.open(`https://wa.me/${cleanPhone}?text=${message}`, '_blank');
+          };
+        });
+        // Price row buttons (they already have data-service,data-price)
+        document.querySelectorAll('.price-row').forEach(row => {
+          const service = row.getAttribute('data-service');
+          const price = row.getAttribute('data-price');
+          row.onclick = function(e) {
+            e.preventDefault();
+            const cleanPhone = phoneNumber.replace(/[^0-9]/g, '');
+            const msg = encodeURIComponent(`مرحباً، أرغب في حجز خدمة "${service}" بسعر ${price} ريال`);
+            window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
+          };
+        });
+        // Service card buttons
+        document.querySelectorAll('.btn-book-service').forEach(btn => {
+          const card = btn.closest('.service-card');
+          if (card) {
+            const service = card.getAttribute('data-service');
+            const price = card.getAttribute('data-price');
+            btn.onclick = function(e) {
+              e.preventDefault();
+              const cleanPhone = phoneNumber.replace(/[^0-9]/g, '');
+              const msg = encodeURIComponent(`مرحباً، أرغب في حجز خدمة "${service}" بسعر ${price} ريال`);
+              window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
+            };
+          }
+        });
+        // TikTok and other actions remain unchanged.
+      }
+
+      updateWhatsAppLinks(phone);
+
+      // Update TikTok link (if any)
+      const tiktokFloat = document.getElementById('tiktokFloat');
+      if (tiktokFloat) {
+        tiktokFloat.onclick = function() {
+          window.open('https://www.tiktok.com/?_r=1&_t=ZS-97NHnXiU8lY', '_blank');
+        };
+      }
+
+      // Optionally, update the favicon or logo? Not needed.
+
+      // Log success
+      console.log(`Loaded business: ${name} (ID: ${id}) from ${file}`);
+    })
+    .catch(err => {
+      console.warn(`Could not load data from ${jsonPath}:`, err);
+    });
+})();
+</script>
 
 <script src="js/main.js" charset="utf-8"></script>
 </body>
