@@ -110,13 +110,40 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https://*.googleusercontent.com https://lh3.googleusercontent.com https://maps.googleapis.com; connect-src 'self'; frame-ancestors 'none';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https://*.googleusercontent.com https://lh3.googleusercontent.com https://maps.googleapis.com https://images.unsplash.com; connect-src 'self'; frame-ancestors 'none';">
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta name="referrer" content="strict-origin-when-cross-origin">
 
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="css/style.css">
+
+  <!-- Additional style for dynamic images -->
+  <style>
+    .business-images {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    .business-images img {
+      max-width: 200px;
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transition: transform 0.2s;
+    }
+    .business-images img:hover {
+      transform: scale(1.05);
+    }
+    @media (max-width: 600px) {
+      .business-images img {
+        max-width: 120px;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -210,6 +237,7 @@
 
 <section class="hero" id="home" role="banner">
   <div class="hero-bg">
+    <!-- The hero image will be set dynamically via script -->
     <img src="" alt="صالون حلاقة" class="hero-img" fetchpriority="high" loading="eager">
     <div class="hero-overlay"></div>
   </div>
@@ -294,6 +322,8 @@
           <img src="" alt="صالون حلاقة" class="img-main" loading="lazy">
           <img src="" alt="صالون حلاقة" class="img-accent" loading="lazy">
         </div>
+        <!-- Dynamic business images will be injected here -->
+        <div id="businessImages" class="business-images"></div>
       </div>
     </div>
   </div>
@@ -1239,16 +1269,37 @@
     return url.searchParams.get(name);
   }
 
+  // ----- Extract images from demo_url or provide fallbacks -----
+  function extractImages(demo_url) {
+    if (!demo_url) return [];
+    // If it contains 'images=', extract after it and split by commas
+    const match = demo_url.match(/images=([^&]*)/);
+    if (match && match[1]) {
+      const raw = decodeURIComponent(match[1]);
+      const urls = raw.split(',').map(s => s.trim()).filter(s => s.startsWith('http'));
+      if (urls.length > 0) return urls;
+    }
+    // Fallback: if the entire demo_url looks like an image URL, return it as single
+    if (demo_url.startsWith('http') && (demo_url.includes('.jpg') || demo_url.includes('.png') || demo_url.includes('.jpeg') || demo_url.includes('.webp'))) {
+      return [demo_url];
+    }
+    // No images found – return fallback barbershop images
+    return [
+      'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=800&auto=format&fit=crop'
+    ];
+  }
+
   const id = getParam('id');
   let file = getParam('file');
-  if (!file) file = 'master.json'; // default
+  if (!file) file = 'master.json';
 
   if (id === null) {
-    // No ID provided – keep static content
+    // No ID – keep static content (but still show fallback images? we'll just keep static)
     return;
   }
 
-  // ----- Fetch and apply data -----
   const jsonPath = `data/${file}`;
 
   fetch(jsonPath)
@@ -1269,14 +1320,13 @@
         if (el) el.textContent = text;
       }
 
-      // ----- Update page -----
       const name = biz.name || 'صالون حلاقة';
       const phone = biz.phone || '+966000000000';
       const address = biz.address || 'العنوان غير متوفر';
       const city = biz.city || '';
       const niche = biz.niche || 'Barbershop';
 
-      // Title & Meta
+      // Update title & meta
       document.title = `${name} | Barber Shop`;
       const metaDesc = document.querySelector('meta[name="description"]');
       if (metaDesc) metaDesc.content = `${name} - أفضل صالون حلاقة ومساج في ${city}. خدمات حلاقة VIP، حمام مغربي، مساج استرخاء. مفتوح 24 ساعة.`;
@@ -1287,7 +1337,7 @@
       const ogDesc = document.querySelector('meta[property="og:description"]');
       if (ogDesc) ogDesc.content = `أفضل صالون حلاقة ومساج في ${city}. حمام مغربي، مساج استرخاء، حلاقة VIP. مفتوح 24 ساعة.`;
 
-      // Schema.org update
+      // Update Schema.org
       const schemaScript = document.getElementById('schemaOrg');
       if (schemaScript) {
         try {
@@ -1301,7 +1351,8 @@
           }
           schema.telephone = phone;
           schema.hasMap = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
-          schema.image = biz.demo_url ? biz.demo_url.split('images=')[1]?.split(',')[0] : schema.image;
+          const images = extractImages(biz.demo_url);
+          if (images.length > 0) schema.image = images[0];
           schemaScript.textContent = JSON.stringify(schema, null, 2);
         } catch (e) { /* ignore */ }
       }
@@ -1327,46 +1378,42 @@
         phoneLink.href = `tel:${phone}`;
       }
 
-      // WhatsApp buttons and links – update all buttons that use the phone
-      function updateWhatsAppLinks(phoneNumber) {
-        const buttons = [
-          '#openChatBtn',
-          '#whatsappFloat',
-          '#footerWaBtn',
-          '#whatsappContactLink',
-          '.btn-book-service',
-          '.price-row',
-          '.platform-opt-whatsapp'
-        ];
-        // Also the booking chat button
-        const chatBtn = document.querySelector('#booking .btn-primary');
-        if (chatBtn) {
-          chatBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const url = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=مرحباً، أريد حجز موعد`;
-            window.open(url, '_blank');
-          });
+      // ----- Handle Images -----
+      const images = extractImages(biz.demo_url);
+      if (images.length > 0) {
+        // Set hero background to first image
+        const heroImg = document.querySelector('.hero-img');
+        if (heroImg) heroImg.src = images[0];
+        const heroBg = document.querySelector('.hero-bg');
+        if (heroBg) {
+          heroBg.style.backgroundImage = `url(${images[0]})`;
+          heroBg.style.backgroundSize = 'cover';
+          heroBg.style.backgroundPosition = 'center';
         }
-        // All elements that should trigger WhatsApp
-        document.querySelectorAll('[data-wa-phone]').forEach(el => {
-          // Already have attribute, but we set it dynamically
-        });
-        // Override click for the main WhatsApp buttons
+        // Insert all images into the businessImages container
+        const imgContainer = document.getElementById('businessImages');
+        if (imgContainer) {
+          imgContainer.innerHTML = images.map(src => `<img src="${src}" alt="${name}" loading="lazy">`).join('');
+        }
+      }
+
+      // ----- Update WhatsApp links (same as before) -----
+      function updateWhatsAppLinks(phoneNumber) {
+        const cleanPhone = phoneNumber.replace(/[^0-9]/g, '');
+        const message = encodeURIComponent('مرحباً، أريد حجز موعد');
+        // Override main WhatsApp buttons
         document.querySelectorAll('#openChatBtn, #whatsappFloat, #footerWaBtn, #whatsappContactLink').forEach(btn => {
           btn.onclick = function(e) {
             e.preventDefault();
-            const cleanPhone = phoneNumber.replace(/[^0-9]/g, '');
-            const message = encodeURIComponent('مرحباً، أريد حجز موعد');
             window.open(`https://wa.me/${cleanPhone}?text=${message}`, '_blank');
           };
         });
-        // Price row buttons (they already have data-service,data-price)
+        // Price rows
         document.querySelectorAll('.price-row').forEach(row => {
           const service = row.getAttribute('data-service');
           const price = row.getAttribute('data-price');
           row.onclick = function(e) {
             e.preventDefault();
-            const cleanPhone = phoneNumber.replace(/[^0-9]/g, '');
             const msg = encodeURIComponent(`مرحباً، أرغب في حجز خدمة "${service}" بسعر ${price} ريال`);
             window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
           };
@@ -1379,28 +1426,23 @@
             const price = card.getAttribute('data-price');
             btn.onclick = function(e) {
               e.preventDefault();
-              const cleanPhone = phoneNumber.replace(/[^0-9]/g, '');
               const msg = encodeURIComponent(`مرحباً، أرغب في حجز خدمة "${service}" بسعر ${price} ريال`);
               window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
             };
           }
         });
-        // TikTok and other actions remain unchanged.
+        // Platform picker WhatsApp option
+        const waOpt = document.querySelector('.platform-opt-whatsapp');
+        if (waOpt) {
+          waOpt.onclick = function(e) {
+            e.preventDefault();
+            window.open(`https://wa.me/${cleanPhone}?text=${message}`, '_blank');
+          };
+        }
+        // TikTok remains unchanged
       }
-
       updateWhatsAppLinks(phone);
 
-      // Update TikTok link (if any)
-      const tiktokFloat = document.getElementById('tiktokFloat');
-      if (tiktokFloat) {
-        tiktokFloat.onclick = function() {
-          window.open('https://www.tiktok.com/?_r=1&_t=ZS-97NHnXiU8lY', '_blank');
-        };
-      }
-
-      // Optionally, update the favicon or logo? Not needed.
-
-      // Log success
       console.log(`Loaded business: ${name} (ID: ${id}) from ${file}`);
     })
     .catch(err => {
