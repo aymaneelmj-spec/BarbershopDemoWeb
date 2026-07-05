@@ -1884,6 +1884,42 @@ if(gallery){
 
   }
 
+  // ABOUT-SECTION IMAGES — these two <img> tags start with src=""
+  // in the raw template and were never wired up by any script. An
+  // empty src with no fixed box size is what was rendering as those
+  // ugly full-width "broken image + alt text" bars. Reuse the same
+  // photo pool as the hero/gallery (skip the one already used as the
+  // hero image when we have enough photos to spare).
+  const aboutImgMain = document.querySelector(".img-main");
+  const aboutImgAccent = document.querySelector(".img-accent");
+  const aboutImagesWrap = document.querySelector(".about-images");
+  const aboutGrid = document.querySelector(".about-grid");
+
+  const aboutMainSrc = demoImages[1] || demoImages[0] || "";
+  const aboutAccentSrc = demoImages[2] || demoImages[0] || "";
+
+  function wireAboutImage(imgEl, src){
+    if(!imgEl) return;
+    imgEl.classList.remove("is-visible");
+    if(!src) return;
+    imgEl.onload = () => { imgEl.classList.add("is-visible"); };
+    imgEl.onerror = () => { imgEl.classList.remove("is-visible"); };
+    imgEl.src = src;
+  }
+
+  wireAboutImage(aboutImgMain, aboutMainSrc);
+  wireAboutImage(aboutImgAccent, aboutAccentSrc);
+
+  // No photos at all to spare for this section — hide it cleanly and
+  // let the text take the full width instead of leaving an empty gap.
+  if(!aboutMainSrc && !aboutAccentSrc){
+    if(aboutImagesWrap) aboutImagesWrap.style.display = "none";
+    if(aboutGrid) aboutGrid.classList.add("about-grid-solo");
+  } else {
+    if(aboutImagesWrap) aboutImagesWrap.style.display = "";
+    if(aboutGrid) aboutGrid.classList.remove("about-grid-solo");
+  }
+
   // GALLERY already populated above via #galleryGrid (same element
   // as .gallery-grid — they're one node, see index.html line 737)
 }

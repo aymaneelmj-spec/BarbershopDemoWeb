@@ -733,6 +733,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   max-height: 420px;
   border: 1px solid var(--border);
   box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  display: none; /* revealed via .is-visible once a real photo loads */
 }
 
 .img-accent {
@@ -745,6 +746,24 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   box-shadow: 0 10px 40px rgba(0,0,0,0.6);
   object-fit: cover;
   aspect-ratio: 4/5;
+  display: none; /* revealed via .is-visible once a real photo loads */
+}
+
+.img-main.is-visible { display: block; }
+.img-accent.is-visible { display: block; }
+
+/* No photos at all available for this business — let the text
+   column take the full width instead of leaving an empty gap. */
+.about-grid.about-grid-solo {
+  grid-template-columns: 1fr;
+}
+.about-grid.about-grid-solo .about-text {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+.about-grid.about-grid-solo .feature-item {
+  text-align: right;
 }
 
 .services {
