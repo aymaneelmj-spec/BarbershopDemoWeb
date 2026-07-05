@@ -6,10 +6,7 @@ window.onerror = function(err){
 
 const params = new URLSearchParams(window.location.search);
 
-// data.json / demo links use 1-based ids (?id=1, ?id=2, ...)
-// but the array itself is 0-based, so we shift by 1 here.
-const rawId = parseInt(params.get("id"), 10);
-const barberId = (isNaN(rawId) ? 1 : rawId) - 1;
+const barberId = params.get("id") || 0;
 
 let BARBER_DATA = null;
 
