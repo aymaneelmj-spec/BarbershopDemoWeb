@@ -8,17 +8,46 @@ const params = new URLSearchParams(window.location.search);
 
 const barberId = params.get("id") || 0;
 
+// Which city/dataset file to load. Defaults to data.json so every
+// link already sent out keeps working exactly as before; pass
+// ?file=damman.json or ?file=jeddah.json to pull from those instead.
+const KNOWN_DATA_FILES = ["data.json", "damman.json", "jeddah.json"];
+const fileParam = params.get("file");
+const DATA_FILE = (fileParam && KNOWN_DATA_FILES.indexOf(fileParam) !== -1)
+  ? fileParam
+  : "data.json";
+
 let BARBER_DATA = null;
+
+// Finds the right record for a given "id" no matter which dataset it
+// comes from:
+//   1) an explicit "id" field on the record itself (clean format)
+//   2) 1-indexed position in the array — this matches how demo_url
+//      values are generated ("...?id=1" -> the 1st record, "id=2" ->
+//      the 2nd, etc.) which is how every current dataset works
+//   3) raw 0-indexed access, kept only as a last-resort fallback for
+//      any very old link that might rely on the previous behavior
+function findBarberRecord(data, idParam) {
+  if (!Array.isArray(data) || !data.length) return null;
+
+  var byId = data.find(function (r) { return r && String(r.id) === String(idParam); });
+  if (byId) return byId;
+
+  var n = parseInt(idParam, 10);
+  if (!isNaN(n) && n >= 1 && n <= data.length) return data[n - 1];
+
+  return data[idParam] || null;
+}
 
 (function () {
   'use strict';
 
 
-fetch("data.json")
+fetch(DATA_FILE)
   .then(res => res.json())
   .then(data => {
 
-    BARBER_DATA = data[barberId];
+    BARBER_DATA = findBarberRecord(data, barberId);
 
     if(!BARBER_DATA){
       document.body.innerHTML = `
@@ -39,6 +68,9 @@ fetch("data.json")
 
     applyBarberData();
 
+  })
+  .catch(err => {
+    console.log("Failed to load " + DATA_FILE + ":", err);
   });
 
 
@@ -347,10 +379,28 @@ let PHONE = '966000000000';
       markActiveSwatch(savedTheme);
     } catch (e) { /* localStorage may be blocked; fall back to defaults silently */ }
 
+    // One-time hint bubble so first-time visitors immediately understand
+    // what this floating button does, instead of guessing at an icon.
+    // Shows once per browser, disappears on its own or on first tap.
+    var hint = document.createElement('div');
+    hint.className = 'theme-picker-hintbubble';
+    hint.textContent = currentLang === 'ar' ? '\u062C\u0631\u0651\u0628 \u0623\u0644\u0648\u0627\u0646 \u0627\u0644\u0645\u0648\u0642\u0639 \uD83C\uDFA8' : 'Try site colors \uD83C\uDFA8';
+    var hintShown = false;
+    try { hintShown = !!localStorage.getItem('demoThemeHintShown'); } catch (e) {}
+    if (!hintShown) {
+      toggle.parentNode.insertBefore(hint, toggle);
+      setTimeout(function () { hint.classList.add('show'); }, 1200);
+      setTimeout(function () { hint.classList.remove('show'); }, 6000);
+      try { localStorage.setItem('demoThemeHintShown', '1'); } catch (e) {}
+    } else {
+      hint.remove();
+    }
+
     toggle.addEventListener('click', function () {
       panel.hidden = !panel.hidden;
+      hint.classList.remove('show');
     });
-    closeBtn.addEventListener('click', function () { panel.hidden = true; });
+    if (closeBtn) closeBtn.addEventListener('click', function () { panel.hidden = true; });
 
     document.addEventListener('click', function (e) {
       if (!panel.hidden && !panel.contains(e.target) && e.target !== toggle && !toggle.contains(e.target)) {
@@ -1160,18 +1210,14 @@ let PHONE = '966000000000';
   }
 
   // ── Gallery ────────────────────────────────────────────────
+  // NOTE: the actual <img> tags are injected later, asynchronously,
+  // once the business data finishes loading (see applyBarberData()).
+  // Everything below is written to work with that — nothing is
+  // captured/cached before the images exist; every lookup below
+  // queries the live DOM at the moment it's needed.
   var galleryGrid = document.getElementById('galleryGrid');
   var galleryLoadMore = document.getElementById('galleryLoadMore');
   var galleryLoadMoreWrap = document.getElementById('galleryLoadMoreWrap');
-
-  if (galleryGrid) {
-    galleryGrid.querySelectorAll('.gallery-item img').forEach(function (img) {
-      img.addEventListener('error', function () {
-        var item = img.closest('.gallery-item');
-        if (item) item.classList.add('gallery-item-missing');
-      }, { once: true });
-    });
-  }
 
   if (galleryGrid && galleryLoadMore) {
     galleryLoadMore.addEventListener('click', function () {
@@ -1181,7 +1227,6 @@ let PHONE = '966000000000';
       galleryLoadMoreWrap.style.display = 'none';
     });
 
-    var galleryItems = Array.from(galleryGrid.querySelectorAll('.gallery-item'));
     var lightboxIndex = 0;
 
     var lightbox = document.createElement('div');
@@ -1204,10 +1249,22 @@ let PHONE = '966000000000';
     var lightboxPrev = lightbox.querySelector('.lightbox-nav.prev');
     var lightboxNext = lightbox.querySelector('.lightbox-nav.next');
 
+    // Always re-queries the DOM — safe whether it's called before or
+    // after the images finish loading, and after "load more" reveals
+    // hidden items too.
+    function getUsableGalleryItems() {
+      return Array.from(galleryGrid.querySelectorAll('.gallery-item')).filter(function (item) {
+        return !item.classList.contains('gallery-item-missing') && !item.hasAttribute('hidden');
+      });
+    }
+
     function showLightbox(index) {
-      lightboxIndex = index;
-      var item = galleryItems[lightboxIndex];
+      var items = getUsableGalleryItems();
+      if (!items.length) return;
+      lightboxIndex = ((index % items.length) + items.length) % items.length;
+      var item = items[lightboxIndex];
       var img = item.querySelector('img');
+      if (!img) return;
       lightboxImg.src = img.src;
       lightboxImg.alt = img.alt;
       lightbox.classList.add('open');
@@ -1220,21 +1277,17 @@ let PHONE = '966000000000';
     }
 
     function navLightbox(direction) {
-      var next = lightboxIndex + direction;
-      if (next < 0) next = galleryItems.length - 1;
-      if (next >= galleryItems.length) next = 0;
-      var guard = 0;
-      while ((galleryItems[next].hasAttribute('hidden') || galleryItems[next].classList.contains('gallery-item-missing')) && guard < galleryItems.length) {
-        next = next + direction;
-        if (next < 0) next = galleryItems.length - 1;
-        if (next >= galleryItems.length) next = 0;
-        guard++;
-      }
-      showLightbox(next);
+      showLightbox(lightboxIndex + direction);
     }
 
-    galleryItems.forEach(function (item, idx) {
-      item.addEventListener('click', function () { showLightbox(idx); });
+    // Delegated click listener — works no matter when items were
+    // added to (or removed from) the grid.
+    galleryGrid.addEventListener('click', function (e) {
+      var item = e.target.closest('.gallery-item');
+      if (!item || item.classList.contains('gallery-item-missing') || item.hasAttribute('hidden')) return;
+      var items = getUsableGalleryItems();
+      var idx = items.indexOf(item);
+      if (idx !== -1) showLightbox(idx);
     });
 
     lightboxClose.addEventListener('click', closeLightbox);
@@ -1612,46 +1665,80 @@ function applyBarberData(){
 const gallery =
   document.getElementById("galleryGrid");
 
-let demoImages = [];
+// Generic placeholder photos used ONLY when a business has no real
+// photos anywhere in its data. Ayman: drop 4-6 generic barbershop /
+// salon photos into an "images/fallback/" folder in the repo using
+// these exact filenames (or edit the list below to match whatever
+// you name them). Any file that's missing just gets skipped — if
+// none of them exist yet, the gallery falls back to the old
+// "hide the section" behavior, so nothing ever breaks.
+const FALLBACK_IMAGES = [
+  "images/fallback/barbershop-1.jpg",
+  "images/fallback/barbershop-2.jpg",
+  "images/fallback/barbershop-3.jpg",
+  "images/fallback/barbershop-4.jpg",
+  "images/fallback/barbershop-5.jpg",
+  "images/fallback/barbershop-6.jpg"
+];
 
-// NEW FORMAT: a real images array on the record
-if(
-  BARBER_DATA.images &&
-  Array.isArray(BARBER_DATA.images)
-){
-
-  demoImages = BARBER_DATA.images;
-
-}
-
-// OLD FORMAT: images embedded in the demo_url query string
-else if(BARBER_DATA.demo_url){
-
-  try {
-
-    const splitPart =
-      BARBER_DATA.demo_url.split("images=")[1];
-
-    if(splitPart){
-
-      demoImages =
-        decodeURIComponent(splitPart)
-          .split(",");
-
-    }
-
-  } catch(err){
-
-    console.log("Gallery Parse Error:", err);
-
+// Images stored as a clean array on the record (best/newest format)
+function imagesFromArrayField(rec){
+  if(rec.images && Array.isArray(rec.images)){
+    return rec.images.slice();
   }
-
+  return [];
 }
+
+// Images embedded directly in demo_url's "images=" query value
+// (used by the city datasets, e.g. damman.json / jeddah.json)
+function imagesFromDemoUrl(rec){
+  if(!rec.demo_url || rec.demo_url.indexOf("images=") === -1) return [];
+  try {
+    let raw = rec.demo_url.split("images=")[1];
+    if(!raw) return [];
+    raw = raw.split("&")[0]; // stop before any following query param
+    return decodeURIComponent(raw).split(",");
+  } catch(err){
+    console.log("Gallery Parse Error (demo_url):", err);
+    return [];
+  }
+}
+
+// Images embedded in the WhatsApp message text (this is where
+// data.json keeps them — the images= param lives inside the
+// pre-written WhatsApp text, not in demo_url)
+function imagesFromWhatsapp(rec){
+  if(!rec.whatsapp) return [];
+  try {
+    const u = new URL(rec.whatsapp);
+    const text = u.searchParams.get("text"); // already decoded once
+    if(!text || text.indexOf("images=") === -1) return [];
+    let raw = text.split("images=")[1];
+    if(!raw) return [];
+    raw = raw.split("\n")[0]; // stop at the first line break
+    return raw.split(",");
+  } catch(err){
+    console.log("Gallery Parse Error (whatsapp):", err);
+    return [];
+  }
+}
+
+let demoImages = imagesFromArrayField(BARBER_DATA);
+if(!demoImages.length) demoImages = imagesFromDemoUrl(BARBER_DATA);
+if(!demoImages.length) demoImages = imagesFromWhatsapp(BARBER_DATA);
 
 // CLEAN IMAGES
 demoImages = demoImages
-  .map(img => img.trim())
+  .map(img => (img || "").trim())
   .filter(Boolean);
+
+// Nothing usable in the business's own data — show generic photos
+// instead of an empty gallery.
+let usingFallbackImages = false;
+if(!demoImages.length && FALLBACK_IMAGES.length){
+  demoImages = FALLBACK_IMAGES.slice();
+  usingFallbackImages = true;
+}
 
 // LIMIT
 demoImages = demoImages.slice(0, 12);
@@ -1664,6 +1751,13 @@ if(gallery){
   let checkedCount = 0;
   const totalToCheck = demoImages.length;
   const gallerySection = document.getElementById("gallery");
+
+  if(gallerySection){
+    gallerySection.classList.toggle("gallery-using-fallback", usingFallbackImages);
+  }
+  if(usingFallbackImages){
+    console.log("Gallery: no real photos found for this business — showing generic fallback images.");
+  }
 
   function finalizeGalleryVisibility(){
     if(checkedCount < totalToCheck) return; // still waiting on some images
@@ -1714,7 +1808,7 @@ if(gallery){
 
       console.log("Image failed:", img);
 
-      item.style.display = "none";
+      item.classList.add("gallery-item-missing");
       checkedCount++;
       finalizeGalleryVisibility();
 
