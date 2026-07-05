@@ -35,7 +35,7 @@
   <meta name="twitter:description" content="أفضل صالون حلاقة ومساج في . مفتوح 24 ساعة.">
   <meta name="twitter:image" content="https://demobarber.com/images/mainbackground.jpg">
 
-  <script type="application/ld+json" id="schemaOrg">
+  <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "HairSalon",
@@ -108,45 +108,19 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https://*.googleusercontent.com https://lh3.googleusercontent.com https://maps.googleapis.com https://images.unsplash.com; connect-src 'self'; frame-ancestors 'none';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https://*.googleusercontent.com https://lh3.googleusercontent.com https://maps.googleapis.com; connect-src 'self'; frame-ancestors 'none';">
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta name="referrer" content="strict-origin-when-cross-origin">
 
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="css/style.css">
-
-  <!-- Styles for dynamic images -->
-  <style>
-    .business-images {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: center;
-      margin: 20px 0;
-    }
-    .business-images img {
-      max-width: 200px;
-      width: 100%;
-      height: auto;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      transition: transform 0.2s;
-      object-fit: cover;
-    }
-    .business-images img:hover {
-      transform: scale(1.05);
-    }
-    @media (max-width: 600px) {
-      .business-images img {
-        max-width: 120px;
-      }
-    }
-  </style>
 </head>
 <body>
 
-<!-- ===== LOADER ===== -->
+<!-- ===== AUDIO — plays once on load ===== -->
+<audio id="casastarAudio" src="audio/ <! ADD HERE AUDIO PATH > " preload="auto" aria-hidden="true"></audio>
+
 <div id="loader">
   <div class="loader-inner">
     <div class="scissors-3d">
@@ -198,7 +172,6 @@
   </svg>
 </div>
 
-<!-- ===== HEADER ===== -->
 <header id="navbar">
   <div class="nav-container">
     <div class="nav-logo">
@@ -231,10 +204,8 @@
   </div>
 </header>
 
-<!-- ===== MAIN ===== -->
 <main>
 
-<!-- HERO -->
 <section class="hero" id="home" role="banner">
   <div class="hero-bg">
     <img src="" alt="صالون حلاقة" class="hero-img" fetchpriority="high" loading="eager">
@@ -262,7 +233,6 @@
   </div>
 </section>
 
-<!-- TICKER -->
 <section class="ticker-bar" aria-hidden="true">
   <div class="ticker-track">
     <span>✦ مفتوح 24 ساعة</span>
@@ -286,7 +256,6 @@
   </div>
 </section>
 
-<!-- ABOUT -->
 <section class="about reveal-section" id="about">
   <div class="container">
     <div class="about-grid">
@@ -323,14 +292,11 @@
           <img src="" alt="صالون حلاقة" class="img-main" loading="lazy">
           <img src="" alt="صالون حلاقة" class="img-accent" loading="lazy">
         </div>
-        <!-- Dynamic business images will be injected here -->
-        <div id="businessImages" class="business-images"></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SERVICES -->
 <section class="services reveal-section" id="services">
   <div class="container">
     <div class="section-header">
@@ -350,18 +316,36 @@
       <div class="services-grid">
         <div class="service-card" data-service="ساعة مساج" data-price="120" data-en-name="1 Hour Massage" data-en-price="120">
           <div class="service-icon-wrap"><span class="service-icon">♨</span></div>
-          <div class="service-info"><h3 data-ar="ساعة مساج" data-en="1 Hour Massage">ساعة مساج</h3><p data-ar="مساج استرخاء كامل لمدة ساعة" data-en="Full relaxation massage for one hour">مساج استرخاء كامل لمدة ساعة</p></div>
-          <div class="service-price-wrap"><span class="service-price">120 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span><button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button></div>
+          <div class="service-info">
+            <h3 data-ar="ساعة مساج" data-en="1 Hour Massage">ساعة مساج</h3>
+            <p data-ar="مساج استرخاء كامل لمدة ساعة" data-en="Full relaxation massage for one hour">مساج استرخاء كامل لمدة ساعة</p>
+          </div>
+          <div class="service-price-wrap">
+            <span class="service-price">120 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+            <button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button>
+          </div>
         </div>
         <div class="service-card" data-service="مساج 45 دقيقة" data-price="100" data-en-name="45 Min Massage" data-en-price="100">
           <div class="service-icon-wrap"><span class="service-icon">♨</span></div>
-          <div class="service-info"><h3 data-ar="مساج 45 دقيقة" data-en="45 Min Massage">مساج 45 دقيقة</h3><p data-ar="جلسة مساج متوسطة المدة" data-en="Medium-duration massage session">جلسة مساج متوسطة المدة</p></div>
-          <div class="service-price-wrap"><span class="service-price">100 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span><button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button></div>
+          <div class="service-info">
+            <h3 data-ar="مساج 45 دقيقة" data-en="45 Min Massage">مساج 45 دقيقة</h3>
+            <p data-ar="جلسة مساج متوسطة المدة" data-en="Medium-duration massage session">جلسة مساج متوسطة المدة</p>
+          </div>
+          <div class="service-price-wrap">
+            <span class="service-price">100 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+            <button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button>
+          </div>
         </div>
         <div class="service-card" data-service="مساج 30 دقيقة" data-price="70" data-en-name="30 Min Massage" data-en-price="70">
           <div class="service-icon-wrap"><span class="service-icon">♨</span></div>
-          <div class="service-info"><h3 data-ar="مساج 30 دقيقة" data-en="30 Min Massage">مساج 30 دقيقة</h3><p data-ar="جلسة سريعة للاسترخاء" data-en="Quick relaxation session">جلسة سريعة للاسترخاء</p></div>
-          <div class="service-price-wrap"><span class="service-price">70 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span><button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button></div>
+          <div class="service-info">
+            <h3 data-ar="مساج 30 دقيقة" data-en="30 Min Massage">مساج 30 دقيقة</h3>
+            <p data-ar="جلسة سريعة للاسترخاء" data-en="Quick relaxation session">جلسة سريعة للاسترخاء</p>
+          </div>
+          <div class="service-price-wrap">
+            <span class="service-price">70 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+            <button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button>
+          </div>
         </div>
       </div>
     </div>
@@ -371,53 +355,243 @@
         <div class="service-card featured" data-service="حمام مغربي ملكي" data-price="150" data-en-name="Royal Moroccan Hammam" data-en-price="150">
           <div class="service-badge" data-ar="الأكثر طلباً" data-en="Most Popular">الأكثر طلباً</div>
           <div class="service-icon-wrap"><span class="service-icon">👑</span></div>
-          <div class="service-info"><h3 data-ar="حمام مغربي ملكي" data-en="Royal Moroccan Hammam">حمام مغربي ملكي</h3><p data-ar="تجربة حمام مغربي فاخرة بأعلى المعايير" data-en="Luxurious Moroccan hammam experience at the highest standards">تجربة حمام مغربي فاخرة بأعلى المعايير</p></div>
-          <div class="service-price-wrap"><span class="service-price">150 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span><button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button></div>
+          <div class="service-info">
+            <h3 data-ar="حمام مغربي ملكي" data-en="Royal Moroccan Hammam">حمام مغربي ملكي</h3>
+            <p data-ar="تجربة حمام مغربي فاخرة بأعلى المعايير" data-en="Luxurious Moroccan hammam experience at the highest standards">تجربة حمام مغربي فاخرة بأعلى المعايير</p>
+          </div>
+          <div class="service-price-wrap">
+            <span class="service-price">150 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+            <button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button>
+          </div>
         </div>
         <div class="service-card" data-service="حمام مغربي" data-price="100" data-en-name="Moroccan Hammam" data-en-price="100">
           <div class="service-icon-wrap"><span class="service-icon">🌿</span></div>
-          <div class="service-info"><h3 data-ar="حمام مغربي" data-en="Moroccan Hammam">حمام مغربي</h3><p data-ar="حمام مغربي تقليدي أصيل" data-en="Authentic traditional Moroccan hammam">حمام مغربي تقليدي أصيل</p></div>
-          <div class="service-price-wrap"><span class="service-price">100 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span><button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button></div>
+          <div class="service-info">
+            <h3 data-ar="حمام مغربي" data-en="Moroccan Hammam">حمام مغربي</h3>
+            <p data-ar="حمام مغربي تقليدي أصيل" data-en="Authentic traditional Moroccan hammam">حمام مغربي تقليدي أصيل</p>
+          </div>
+          <div class="service-price-wrap">
+            <span class="service-price">100 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+            <button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button>
+          </div>
         </div>
         <div class="service-card" data-service="حمام مغربي عادي" data-price="100" data-en-name="Regular Moroccan Hammam" data-en-price="100">
           <div class="service-icon-wrap"><span class="service-icon">💧</span></div>
-          <div class="service-info"><h3 data-ar="حمام مغربي عادي" data-en="Regular Moroccan Hammam">حمام مغربي عادي</h3><p data-ar="تنظيف عميق وتجديد البشرة" data-en="Deep cleansing and skin renewal">تنظيف عميق وتجديد البشرة</p></div>
-          <div class="service-price-wrap"><span class="service-price">100 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span><button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button></div>
+          <div class="service-info">
+            <h3 data-ar="حمام مغربي عادي" data-en="Regular Moroccan Hammam">حمام مغربي عادي</h3>
+            <p data-ar="تنظيف عميق وتجديد البشرة" data-en="Deep cleansing and skin renewal">تنظيف عميق وتجديد البشرة</p>
+          </div>
+          <div class="service-price-wrap">
+            <span class="service-price">100 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+            <button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button>
+          </div>
         </div>
       </div>
     </div>
 
     <div class="tab-content active" id="tab-barber">
       <div class="services-grid">
-        <!-- All barber services (unchanged) -->
-        <div class="service-card" data-service="حلاقة شعر" data-price="25" data-en-name="Haircut" data-en-price="25"><div class="service-icon-wrap"><span class="service-icon">✂</span></div><div class="service-info"><h3 data-ar="حلاقة شعر" data-en="Haircut">حلاقة شعر</h3><p data-ar="قصة شعر احترافية" data-en="Professional haircut">قصة شعر احترافية</p></div><div class="service-price-wrap"><span class="service-price">25 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span><button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button></div></div>
-        <div class="service-card" data-service="حلاقة دقن" data-price="25" data-en-name="Beard Trim" data-en-price="25"><div class="service-icon-wrap"><span class="service-icon">🪒</span></div><div class="service-info"><h3 data-ar="حلاقة دقن" data-en="Beard Trim">حلاقة دقن</h3><p data-ar="تشكيل وتهذيب اللحية" data-en="Beard shaping and grooming">تشكيل وتهذيب اللحية</p></div><div class="service-price-wrap"><span class="service-price">25 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span><button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button></div></div>
-        <div class="service-card featured" data-service="حلاقة شعر VIP" data-price="50" data-en-name="VIP Haircut" data-en-price="50"><div class="service-badge" data-ar="VIP" data-en="VIP">VIP</div><div class="service-icon-wrap"><span class="service-icon">✦</span></div><div class="service-info"><h3 data-ar="حلاقة شعر VIP" data-en="VIP Haircut">حلاقة شعر VIP</h3><p data-ar="تجربة حلاقة فاخرة لا مثيل لها" data-en="An unmatched luxury haircut experience">تجربة حلاقة فاخرة لا مثيل لها</p></div><div class="service-price-wrap"><span class="service-price">50 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span><button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button></div></div>
-        <div class="service-card featured" data-service="حلاقة دقن VIP" data-price="45" data-en-name="VIP Beard Trim" data-en-price="45"><div class="service-badge" data-ar="VIP" data-en="VIP">VIP</div><div class="service-icon-wrap"><span class="service-icon">✦</span></div><div class="service-info"><h3 data-ar="حلاقة دقن VIP" data-en="VIP Beard Trim">حلاقة دقن VIP</h3><p data-ar="تجربة VIP كاملة لتشكيل اللحية" data-en="Full VIP experience for beard shaping">تجربة VIP كاملة لتشكيل اللحية</p></div><div class="service-price-wrap"><span class="service-price">45 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span><button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button></div></div>
-        <div class="service-card" data-service="شعر + دقن" data-price="60" data-en-name="Hair + Beard" data-en-price="60"><div class="service-icon-wrap"><span class="service-icon">💈</span></div><div class="service-info"><h3 data-ar="شعر + دقن" data-en="Hair + Beard">شعر + دقن</h3><p data-ar="حلاقة الشعر مع تهذيب اللحية" data-en="Haircut with beard grooming">حلاقة الشعر مع تهذيب اللحية</p></div><div class="service-price-wrap"><span class="service-price">60 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span><button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button></div></div>
-        <div class="service-card" data-service="تحديد شمع" data-price="20" data-en-name="Wax Lining" data-en-price="20"><div class="service-icon-wrap"><span class="service-icon">🪄</span></div><div class="service-info"><h3 data-ar="تحديد شمع" data-en="Wax Lining">تحديد شمع</h3><p data-ar="تحديد دقيق بالشمع" data-en="Precise wax lining">تحديد دقيق بالشمع</p></div><div class="service-price-wrap"><span class="service-price">20 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span><button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button></div></div>
-        <div class="service-card" data-service="غسيل شعر" data-price="5" data-en-name="Hair Wash" data-en-price="5"><div class="service-icon-wrap"><span class="service-icon">💆</span></div><div class="service-info"><h3 data-ar="غسيل شعر" data-en="Hair Wash">غسيل شعر</h3><p data-ar="غسيل وتنظيف الشعر بمنتجات فاخرة" data-en="Hair washing and cleaning with luxury products">غسيل وتنظيف الشعر بمنتجات فاخرة</p></div><div class="service-price-wrap"><span class="service-price">5 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span><button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button></div></div>
-        <div class="service-card" data-service="ستشوار" data-price="15" data-en-name="Blow Dry" data-en-price="15"><div class="service-icon-wrap"><span class="service-icon">💨</span></div><div class="service-info"><h3 data-ar="ستشوار" data-en="Blow Dry">ستشوار</h3><p data-ar="تجفيف وتصفيف الشعر" data-en="Hair drying and styling">تجفيف وتصفيف الشعر</p></div><div class="service-price-wrap"><span class="service-price">15 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span><button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button></div></div>
-        <div class="service-card" data-service="حلاقة أطفال" data-price="30" data-en-name="Kids Haircut" data-en-price="30"><div class="service-icon-wrap"><span class="service-icon">⭐</span></div><div class="service-info"><h3 data-ar="حلاقة أطفال" data-en="Kids Haircut">حلاقة أطفال</h3><p data-ar="قصة شعر للأطفال بلطف واحترافية" data-en="Children's haircut with gentleness and professionalism">قصة شعر للأطفال بلطف واحترافية</p></div><div class="service-price-wrap"><span class="service-price">30 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span><button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button></div></div>
-        <div class="service-card" data-service="صباغة شعر" data-price="30" data-en-name="Hair Dye" data-en-price="30"><div class="service-icon-wrap"><span class="service-icon">🎨</span></div><div class="service-info"><h3 data-ar="صباغة شعر" data-en="Hair Dye">صباغة شعر</h3><p data-ar="صباغة الشعر بأحدث الألوان" data-en="Hair coloring with the latest shades">صباغة الشعر بأحدث الألوان</p></div><div class="service-price-wrap"><span class="service-price">30 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span><button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button></div></div>
-        <div class="service-card" data-service="صباغة دقن" data-price="15" data-en-name="Beard Dye" data-en-price="15"><div class="service-icon-wrap"><span class="service-icon">🎨</span></div><div class="service-info"><h3 data-ar="صباغة دقن" data-en="Beard Dye">صباغة دقن</h3><p data-ar="تلوين وتجديد اللحية" data-en="Beard coloring and renewal">تلوين وتجديد اللحية</p></div><div class="service-price-wrap"><span class="service-price">15 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span><button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button></div></div>
-        <div class="service-card" data-service="تنظيف بشرة" data-price="30-50-120" data-en-name="Skin Cleansing" data-en-price="30-50-120"><div class="service-icon-wrap"><span class="service-icon">✨</span></div><div class="service-info"><h3 data-ar="تنظيف بشرة" data-en="Skin Cleansing">تنظيف بشرة</h3><p data-ar="تنظيف عميق وترطيب للبشرة، حسب نوع الخدمة" data-en="Deep cleansing and moisturizing for skin, depending on service type">تنظيف عميق وترطيب للبشرة، حسب نوع الخدمة</p></div><div class="service-price-wrap"><span class="service-price">30-50-120 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span><button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button></div></div>
-        <div class="service-card" data-service="حمام زيت بالبخار" data-price="25" data-en-name="Steam Oil Hammam" data-en-price="25"><div class="service-icon-wrap"><span class="service-icon">💨</span></div><div class="service-info"><h3 data-ar="حمام زيت بالبخار" data-en="Steam Oil Hammam">حمام زيت بالبخار</h3><p data-ar="علاج بالزيوت الطبيعية والبخار" data-en="Treatment with natural oils and steam">علاج بالزيوت الطبيعية والبخار</p></div><div class="service-price-wrap"><span class="service-price">25 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span><button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button></div></div>
-        <div class="service-card featured" data-service="بروتين" data-price="250" data-en-name="Protein Treatment" data-en-price="250"><div class="service-badge" data-ar="متميز" data-en="Premium">متميز</div><div class="service-icon-wrap"><span class="service-icon">💎</span></div><div class="service-info"><h3 data-ar="بروتين" data-en="Protein Treatment">بروتين</h3><p data-ar="علاج البروتين لشعر ناعم ولامع" data-en="Protein treatment for smooth and shiny hair">علاج البروتين لشعر ناعم ولامع</p></div><div class="service-price-wrap"><span class="service-price">250 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span><button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button></div></div>
-        <div class="service-card featured" data-service="تجهيز عرسان" data-price="550" data-en-name="Groom Package" data-en-price="550"><div class="service-badge" data-ar="متميز" data-en="Premium">متميز</div><div class="service-icon-wrap"><span class="service-icon">🎩</span></div><div class="service-info"><h3 data-ar="تجهيز عرسان" data-en="Groom Package">تجهيز عرسان</h3><p data-ar="حزمة كاملة للعريس يوم الزفاف" data-en="Full package for the groom on wedding day">حزمة كاملة للعريس يوم الزفاف</p></div><div class="service-price-wrap"><span class="service-price">550 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span><button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button></div></div>
+        <div class="service-card" data-service="حلاقة شعر" data-price="25" data-en-name="Haircut" data-en-price="25">
+          <div class="service-icon-wrap"><span class="service-icon">✂</span></div>
+          <div class="service-info">
+            <h3 data-ar="حلاقة شعر" data-en="Haircut">حلاقة شعر</h3>
+            <p data-ar="قصة شعر احترافية" data-en="Professional haircut">قصة شعر احترافية</p>
+          </div>
+          <div class="service-price-wrap">
+            <span class="service-price">25 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+            <button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button>
+          </div>
+        </div>
+        <div class="service-card" data-service="حلاقة دقن" data-price="25" data-en-name="Beard Trim" data-en-price="25">
+          <div class="service-icon-wrap"><span class="service-icon">🪒</span></div>
+          <div class="service-info">
+            <h3 data-ar="حلاقة دقن" data-en="Beard Trim">حلاقة دقن</h3>
+            <p data-ar="تشكيل وتهذيب اللحية" data-en="Beard shaping and grooming">تشكيل وتهذيب اللحية</p>
+          </div>
+          <div class="service-price-wrap">
+            <span class="service-price">25 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+            <button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button>
+          </div>
+        </div>
+        <div class="service-card featured" data-service="حلاقة شعر VIP" data-price="50" data-en-name="VIP Haircut" data-en-price="50">
+          <div class="service-badge" data-ar="VIP" data-en="VIP">VIP</div>
+          <div class="service-icon-wrap"><span class="service-icon">✦</span></div>
+          <div class="service-info">
+            <h3 data-ar="حلاقة شعر VIP" data-en="VIP Haircut">حلاقة شعر VIP</h3>
+            <p data-ar="تجربة حلاقة فاخرة لا مثيل لها" data-en="An unmatched luxury haircut experience">تجربة حلاقة فاخرة لا مثيل لها</p>
+          </div>
+          <div class="service-price-wrap">
+            <span class="service-price">50 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+            <button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button>
+          </div>
+        </div>
+        <div class="service-card featured" data-service="حلاقة دقن VIP" data-price="45" data-en-name="VIP Beard Trim" data-en-price="45">
+          <div class="service-badge" data-ar="VIP" data-en="VIP">VIP</div>
+          <div class="service-icon-wrap"><span class="service-icon">✦</span></div>
+          <div class="service-info">
+            <h3 data-ar="حلاقة دقن VIP" data-en="VIP Beard Trim">حلاقة دقن VIP</h3>
+            <p data-ar="تجربة VIP كاملة لتشكيل اللحية" data-en="Full VIP experience for beard shaping">تجربة VIP كاملة لتشكيل اللحية</p>
+          </div>
+          <div class="service-price-wrap">
+            <span class="service-price">45 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+            <button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button>
+          </div>
+        </div>
+        <div class="service-card" data-service="شعر + دقن" data-price="60" data-en-name="Hair + Beard" data-en-price="60">
+          <div class="service-icon-wrap"><span class="service-icon">💈</span></div>
+          <div class="service-info">
+            <h3 data-ar="شعر + دقن" data-en="Hair + Beard">شعر + دقن</h3>
+            <p data-ar="حلاقة الشعر مع تهذيب اللحية" data-en="Haircut with beard grooming">حلاقة الشعر مع تهذيب اللحية</p>
+          </div>
+          <div class="service-price-wrap">
+            <span class="service-price">60 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+            <button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button>
+          </div>
+        </div>
+        <div class="service-card" data-service="تحديد شمع" data-price="20" data-en-name="Wax Lining" data-en-price="20">
+          <div class="service-icon-wrap"><span class="service-icon">🪄</span></div>
+          <div class="service-info">
+            <h3 data-ar="تحديد شمع" data-en="Wax Lining">تحديد شمع</h3>
+            <p data-ar="تحديد دقيق بالشمع" data-en="Precise wax lining">تحديد دقيق بالشمع</p>
+          </div>
+          <div class="service-price-wrap">
+            <span class="service-price">20 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+            <button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button>
+          </div>
+        </div>
+        <div class="service-card" data-service="غسيل شعر" data-price="5" data-en-name="Hair Wash" data-en-price="5">
+          <div class="service-icon-wrap"><span class="service-icon">💆</span></div>
+          <div class="service-info">
+            <h3 data-ar="غسيل شعر" data-en="Hair Wash">غسيل شعر</h3>
+            <p data-ar="غسيل وتنظيف الشعر بمنتجات فاخرة" data-en="Hair washing and cleaning with luxury products">غسيل وتنظيف الشعر بمنتجات فاخرة</p>
+          </div>
+          <div class="service-price-wrap">
+            <span class="service-price">5 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+            <button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button>
+          </div>
+        </div>
+        <div class="service-card" data-service="ستشوار" data-price="15" data-en-name="Blow Dry" data-en-price="15">
+          <div class="service-icon-wrap"><span class="service-icon">💨</span></div>
+          <div class="service-info">
+            <h3 data-ar="ستشوار" data-en="Blow Dry">ستشوار</h3>
+            <p data-ar="تجفيف وتصفيف الشعر" data-en="Hair drying and styling">تجفيف وتصفيف الشعر</p>
+          </div>
+          <div class="service-price-wrap">
+            <span class="service-price">15 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+            <button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button>
+          </div>
+        </div>
+        <div class="service-card" data-service="حلاقة أطفال" data-price="30" data-en-name="Kids Haircut" data-en-price="30">
+          <div class="service-icon-wrap"><span class="service-icon">⭐</span></div>
+          <div class="service-info">
+            <h3 data-ar="حلاقة أطفال" data-en="Kids Haircut">حلاقة أطفال</h3>
+            <p data-ar="قصة شعر للأطفال بلطف واحترافية" data-en="Children's haircut with gentleness and professionalism">قصة شعر للأطفال بلطف واحترافية</p>
+          </div>
+          <div class="service-price-wrap">
+            <span class="service-price">30 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+            <button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button>
+          </div>
+        </div>
+        <div class="service-card" data-service="صباغة شعر" data-price="30" data-en-name="Hair Dye" data-en-price="30">
+          <div class="service-icon-wrap"><span class="service-icon">🎨</span></div>
+          <div class="service-info">
+            <h3 data-ar="صباغة شعر" data-en="Hair Dye">صباغة شعر</h3>
+            <p data-ar="صباغة الشعر بأحدث الألوان" data-en="Hair coloring with the latest shades">صباغة الشعر بأحدث الألوان</p>
+          </div>
+          <div class="service-price-wrap">
+            <span class="service-price">30 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+            <button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button>
+          </div>
+        </div>
+        <div class="service-card" data-service="صباغة دقن" data-price="15" data-en-name="Beard Dye" data-en-price="15">
+          <div class="service-icon-wrap"><span class="service-icon">🎨</span></div>
+          <div class="service-info">
+            <h3 data-ar="صباغة دقن" data-en="Beard Dye">صباغة دقن</h3>
+            <p data-ar="تلوين وتجديد اللحية" data-en="Beard coloring and renewal">تلوين وتجديد اللحية</p>
+          </div>
+          <div class="service-price-wrap">
+            <span class="service-price">15 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+            <button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button>
+          </div>
+        </div>
+        <div class="service-card" data-service="تنظيف بشرة" data-price="30-50-120" data-en-name="Skin Cleansing" data-en-price="30-50-120">
+          <div class="service-icon-wrap"><span class="service-icon">✨</span></div>
+          <div class="service-info">
+            <h3 data-ar="تنظيف بشرة" data-en="Skin Cleansing">تنظيف بشرة</h3>
+            <p data-ar="تنظيف عميق وترطيب للبشرة، حسب نوع الخدمة" data-en="Deep cleansing and moisturizing for skin, depending on service type">تنظيف عميق وترطيب للبشرة، حسب نوع الخدمة</p>
+          </div>
+          <div class="service-price-wrap">
+            <span class="service-price">30-50-120 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+            <button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button>
+          </div>
+        </div>
+        <div class="service-card" data-service="حمام زيت بالبخار" data-price="25" data-en-name="Steam Oil Hammam" data-en-price="25">
+          <div class="service-icon-wrap"><span class="service-icon">💨</span></div>
+          <div class="service-info">
+            <h3 data-ar="حمام زيت بالبخار" data-en="Steam Oil Hammam">حمام زيت بالبخار</h3>
+            <p data-ar="علاج بالزيوت الطبيعية والبخار" data-en="Treatment with natural oils and steam">علاج بالزيوت الطبيعية والبخار</p>
+          </div>
+          <div class="service-price-wrap">
+            <span class="service-price">25 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+            <button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button>
+          </div>
+        </div>
+        <div class="service-card featured" data-service="بروتين" data-price="250" data-en-name="Protein Treatment" data-en-price="250">
+          <div class="service-badge" data-ar="متميز" data-en="Premium">متميز</div>
+          <div class="service-icon-wrap"><span class="service-icon">💎</span></div>
+          <div class="service-info">
+            <h3 data-ar="بروتين" data-en="Protein Treatment">بروتين</h3>
+            <p data-ar="علاج البروتين لشعر ناعم ولامع" data-en="Protein treatment for smooth and shiny hair">علاج البروتين لشعر ناعم ولامع</p>
+          </div>
+          <div class="service-price-wrap">
+            <span class="service-price">250 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+            <button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button>
+          </div>
+        </div>
+        <div class="service-card featured" data-service="تجهيز عرسان" data-price="550" data-en-name="Groom Package" data-en-price="550">
+          <div class="service-badge" data-ar="متميز" data-en="Premium">متميز</div>
+          <div class="service-icon-wrap"><span class="service-icon">🎩</span></div>
+          <div class="service-info">
+            <h3 data-ar="تجهيز عرسان" data-en="Groom Package">تجهيز عرسان</h3>
+            <p data-ar="حزمة كاملة للعريس يوم الزفاف" data-en="Full package for the groom on wedding day">حزمة كاملة للعريس يوم الزفاف</p>
+          </div>
+          <div class="service-price-wrap">
+            <span class="service-price">550 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+            <button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button>
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="tab-content" id="tab-care">
       <div class="services-grid">
-        <div class="service-card" data-service="خدمات الأظافر بديكير أرجل" data-price="70" data-en-name="Pedicure" data-en-price="70"><div class="service-icon-wrap"><span class="service-icon">🦶</span></div><div class="service-info"><h3 data-ar="بديكير أرجل" data-en="Pedicure">بديكير أرجل</h3><p data-ar="خدمات الأظافر للأرجل" data-en="Foot nail care services">خدمات الأظافر للأرجل</p></div><div class="service-price-wrap"><span class="service-price">70 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span><button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button></div></div>
-        <div class="service-card" data-service="بديكير أيادي" data-price="70" data-en-name="Manicure" data-en-price="70"><div class="service-icon-wrap"><span class="service-icon">🤲</span></div><div class="service-info"><h3 data-ar="بديكير أيادي" data-en="Manicure">بديكير أيادي</h3><p data-ar="خدمات الأظافر لليدين" data-en="Hand nail care services">خدمات الأظافر لليدين</p></div><div class="service-price-wrap"><span class="service-price">70 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span><button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button></div></div>
+        <div class="service-card" data-service="خدمات الأظافر بديكير أرجل" data-price="70" data-en-name="Pedicure" data-en-price="70">
+          <div class="service-icon-wrap"><span class="service-icon">🦶</span></div>
+          <div class="service-info">
+            <h3 data-ar="بديكير أرجل" data-en="Pedicure">بديكير أرجل</h3>
+            <p data-ar="خدمات الأظافر للأرجل" data-en="Foot nail care services">خدمات الأظافر للأرجل</p>
+          </div>
+          <div class="service-price-wrap">
+            <span class="service-price">70 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+            <button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button>
+          </div>
+        </div>
+        <div class="service-card" data-service="بديكير أيادي" data-price="70" data-en-name="Manicure" data-en-price="70">
+          <div class="service-icon-wrap"><span class="service-icon">🤲</span></div>
+          <div class="service-info">
+            <h3 data-ar="بديكير أيادي" data-en="Manicure">بديكير أيادي</h3>
+            <p data-ar="خدمات الأظافر لليدين" data-en="Hand nail care services">خدمات الأظافر لليدين</p>
+          </div>
+          <div class="service-price-wrap">
+            <span class="service-price">70 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+            <button class="btn-book-service" data-ar="احجز" data-en="Book">احجز</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PRICELIST -->
 <section class="pricelist reveal-section" id="pricelist">
   <div class="container">
     <div class="section-header">
@@ -427,53 +601,133 @@
     </div>
     <div class="price-list-grid">
       <div class="price-category" data-category="barber">
-        <div class="price-category-head"><span class="price-category-icon">✂</span><h3 data-ar="الحلاقة" data-en="Barber">الحلاقة</h3></div>
+        <div class="price-category-head">
+          <span class="price-category-icon">✂</span>
+          <h3 data-ar="الحلاقة" data-en="Barber">الحلاقة</h3>
+        </div>
         <div class="price-rows">
-          <button class="price-row" data-service="حلاقة شعر" data-price="25" data-en-name="Haircut" data-en-price="25" type="button"><span class="price-row-name" data-ar="حلاقة شعر" data-en="Haircut">حلاقة شعر</span><span class="price-row-amount">25 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span></button>
-          <button class="price-row" data-service="حلاقة دقن" data-price="25" data-en-name="Beard Trim" data-en-price="25" type="button"><span class="price-row-name" data-ar="حلاقة دقن" data-en="Beard Trim">حلاقة دقن</span><span class="price-row-amount">25 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span></button>
-          <button class="price-row" data-service="حلاقة شعر VIP" data-price="50" data-en-name="VIP Haircut" data-en-price="50" type="button"><span class="price-row-name" data-ar="حلاقة شعر VIP" data-en="VIP Haircut">حلاقة شعر VIP</span><span class="price-row-amount">50 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span></button>
-          <button class="price-row" data-service="حلاقة دقن VIP" data-price="45" data-en-name="VIP Beard Trim" data-en-price="45" type="button"><span class="price-row-name" data-ar="حلاقة دقن VIP" data-en="VIP Beard Trim">حلاقة دقن VIP</span><span class="price-row-amount">45 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span></button>
-          <button class="price-row" data-service="شعر + دقن" data-price="60" data-en-name="Hair + Beard" data-en-price="60" type="button"><span class="price-row-name" data-ar="شعر + دقن" data-en="Hair + Beard">شعر + دقن</span><span class="price-row-amount">60 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span></button>
-          <button class="price-row" data-service="تحديد شمع" data-price="20" data-en-name="Wax Lining" data-en-price="20" type="button"><span class="price-row-name" data-ar="تحديد شمع" data-en="Wax Lining">تحديد شمع</span><span class="price-row-amount">20 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span></button>
-          <button class="price-row" data-service="غسيل شعر" data-price="5" data-en-name="Hair Wash" data-en-price="5" type="button"><span class="price-row-name" data-ar="غسيل شعر" data-en="Hair Wash">غسيل شعر</span><span class="price-row-amount">5 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span></button>
-          <button class="price-row" data-service="ستشوار" data-price="15" data-en-name="Blow Dry" data-en-price="15" type="button"><span class="price-row-name" data-ar="ستشوار" data-en="Blow Dry">ستشوار</span><span class="price-row-amount">15 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span></button>
-          <button class="price-row" data-service="حلاقة أطفال" data-price="30" data-en-name="Kids Haircut" data-en-price="30" type="button"><span class="price-row-name" data-ar="حلاقة أطفال" data-en="Kids Haircut">حلاقة أطفال</span><span class="price-row-amount">30 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span></button>
-          <button class="price-row" data-service="صباغة شعر" data-price="30" data-en-name="Hair Dye" data-en-price="30" type="button"><span class="price-row-name" data-ar="صباغة شعر" data-en="Hair Dye">صباغة شعر</span><span class="price-row-amount">30 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span></button>
-          <button class="price-row" data-service="صباغة دقن" data-price="15" data-en-name="Beard Dye" data-en-price="15" type="button"><span class="price-row-name" data-ar="صباغة دقن" data-en="Beard Dye">صباغة دقن</span><span class="price-row-amount">15 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span></button>
-          <button class="price-row" data-service="تنظيف بشرة" data-price="30-50-120" data-en-name="Skin Cleansing" data-en-price="30-50-120" type="button"><span class="price-row-name" data-ar="تنظيف بشرة" data-en="Skin Cleansing">تنظيف بشرة</span><span class="price-row-amount">30-50-120 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span></button>
-          <button class="price-row" data-service="حمام زيت بالبخار" data-price="25" data-en-name="Steam Oil Hammam" data-en-price="25" type="button"><span class="price-row-name" data-ar="حمام زيت بالبخار" data-en="Steam Oil Hammam">حمام زيت بالبخار</span><span class="price-row-amount">25 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span></button>
-          <button class="price-row" data-service="بروتين" data-price="250" data-en-name="Protein Treatment" data-en-price="250" type="button"><span class="price-row-name" data-ar="بروتين" data-en="Protein Treatment">بروتين</span><span class="price-row-amount">250 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span></button>
-          <button class="price-row" data-service="تجهيز عرسان" data-price="550" data-en-name="Groom Package" data-en-price="550" type="button"><span class="price-row-name" data-ar="تجهيز عرسان" data-en="Groom Package">تجهيز عرسان</span><span class="price-row-amount">550 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span></button>
+          <button class="price-row" data-service="حلاقة شعر" data-price="25" data-en-name="Haircut" data-en-price="25" type="button">
+            <span class="price-row-name" data-ar="حلاقة شعر" data-en="Haircut">حلاقة شعر</span>
+            <span class="price-row-amount">25 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+          </button>
+          <button class="price-row" data-service="حلاقة دقن" data-price="25" data-en-name="Beard Trim" data-en-price="25" type="button">
+            <span class="price-row-name" data-ar="حلاقة دقن" data-en="Beard Trim">حلاقة دقن</span>
+            <span class="price-row-amount">25 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+          </button>
+          <button class="price-row" data-service="حلاقة شعر VIP" data-price="50" data-en-name="VIP Haircut" data-en-price="50" type="button">
+            <span class="price-row-name" data-ar="حلاقة شعر VIP" data-en="VIP Haircut">حلاقة شعر VIP</span>
+            <span class="price-row-amount">50 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+          </button>
+          <button class="price-row" data-service="حلاقة دقن VIP" data-price="45" data-en-name="VIP Beard Trim" data-en-price="45" type="button">
+            <span class="price-row-name" data-ar="حلاقة دقن VIP" data-en="VIP Beard Trim">حلاقة دقن VIP</span>
+            <span class="price-row-amount">45 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+          </button>
+          <button class="price-row" data-service="شعر + دقن" data-price="60" data-en-name="Hair + Beard" data-en-price="60" type="button">
+            <span class="price-row-name" data-ar="شعر + دقن" data-en="Hair + Beard">شعر + دقن</span>
+            <span class="price-row-amount">60 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+          </button>
+          <button class="price-row" data-service="تحديد شمع" data-price="20" data-en-name="Wax Lining" data-en-price="20" type="button">
+            <span class="price-row-name" data-ar="تحديد شمع" data-en="Wax Lining">تحديد شمع</span>
+            <span class="price-row-amount">20 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+          </button>
+          <button class="price-row" data-service="غسيل شعر" data-price="5" data-en-name="Hair Wash" data-en-price="5" type="button">
+            <span class="price-row-name" data-ar="غسيل شعر" data-en="Hair Wash">غسيل شعر</span>
+            <span class="price-row-amount">5 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+          </button>
+          <button class="price-row" data-service="ستشوار" data-price="15" data-en-name="Blow Dry" data-en-price="15" type="button">
+            <span class="price-row-name" data-ar="ستشوار" data-en="Blow Dry">ستشوار</span>
+            <span class="price-row-amount">15 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+          </button>
+          <button class="price-row" data-service="حلاقة أطفال" data-price="30" data-en-name="Kids Haircut" data-en-price="30" type="button">
+            <span class="price-row-name" data-ar="حلاقة أطفال" data-en="Kids Haircut">حلاقة أطفال</span>
+            <span class="price-row-amount">30 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+          </button>
+          <button class="price-row" data-service="صباغة شعر" data-price="30" data-en-name="Hair Dye" data-en-price="30" type="button">
+            <span class="price-row-name" data-ar="صباغة شعر" data-en="Hair Dye">صباغة شعر</span>
+            <span class="price-row-amount">30 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+          </button>
+          <button class="price-row" data-service="صباغة دقن" data-price="15" data-en-name="Beard Dye" data-en-price="15" type="button">
+            <span class="price-row-name" data-ar="صباغة دقن" data-en="Beard Dye">صباغة دقن</span>
+            <span class="price-row-amount">15 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+          </button>
+          <button class="price-row" data-service="تنظيف بشرة" data-price="30-50-120" data-en-name="Skin Cleansing" data-en-price="30-50-120" type="button">
+            <span class="price-row-name" data-ar="تنظيف بشرة" data-en="Skin Cleansing">تنظيف بشرة</span>
+            <span class="price-row-amount">30-50-120 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+          </button>
+          <button class="price-row" data-service="حمام زيت بالبخار" data-price="25" data-en-name="Steam Oil Hammam" data-en-price="25" type="button">
+            <span class="price-row-name" data-ar="حمام زيت بالبخار" data-en="Steam Oil Hammam">حمام زيت بالبخار</span>
+            <span class="price-row-amount">25 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+          </button>
+          <button class="price-row" data-service="بروتين" data-price="250" data-en-name="Protein Treatment" data-en-price="250" type="button">
+            <span class="price-row-name" data-ar="بروتين" data-en="Protein Treatment">بروتين</span>
+            <span class="price-row-amount">250 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+          </button>
+          <button class="price-row" data-service="تجهيز عرسان" data-price="550" data-en-name="Groom Package" data-en-price="550" type="button">
+            <span class="price-row-name" data-ar="تجهيز عرسان" data-en="Groom Package">تجهيز عرسان</span>
+            <span class="price-row-amount">550 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+          </button>
         </div>
       </div>
       <div class="price-category" data-category="care">
-        <div class="price-category-head"><span class="price-category-icon">✨</span><h3 data-ar="العناية والتجميل" data-en="Care & Beauty">العناية والتجميل</h3></div>
+        <div class="price-category-head">
+          <span class="price-category-icon">✨</span>
+          <h3 data-ar="العناية والتجميل" data-en="Care & Beauty">العناية والتجميل</h3>
+        </div>
         <div class="price-rows">
-          <button class="price-row" data-service="بديكير أرجل" data-price="70" data-en-name="Pedicure" data-en-price="70" type="button"><span class="price-row-name" data-ar="بديكير أرجل" data-en="Pedicure">بديكير أرجل</span><span class="price-row-amount">70 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span></button>
-          <button class="price-row" data-service="بديكير أيادي" data-price="70" data-en-name="Manicure" data-en-price="70" type="button"><span class="price-row-name" data-ar="بديكير أيادي" data-en="Manicure">بديكير أيادي</span><span class="price-row-amount">70 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span></button>
+          <button class="price-row" data-service="بديكير أرجل" data-price="70" data-en-name="Pedicure" data-en-price="70" type="button">
+            <span class="price-row-name" data-ar="بديكير أرجل" data-en="Pedicure">بديكير أرجل</span>
+            <span class="price-row-amount">70 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+          </button>
+          <button class="price-row" data-service="بديكير أيادي" data-price="70" data-en-name="Manicure" data-en-price="70" type="button">
+            <span class="price-row-name" data-ar="بديكير أيادي" data-en="Manicure">بديكير أيادي</span>
+            <span class="price-row-amount">70 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+          </button>
         </div>
       </div>
       <div class="price-category" data-category="massage">
-        <div class="price-category-head"><span class="price-category-icon">♨</span><h3 data-ar="مساج واسترخاء" data-en="Massage & Relaxation">مساج واسترخاء</h3></div>
+        <div class="price-category-head">
+          <span class="price-category-icon">♨</span>
+          <h3 data-ar="مساج واسترخاء" data-en="Massage & Relaxation">مساج واسترخاء</h3>
+        </div>
         <div class="price-rows">
-          <button class="price-row" data-service="ساعة مساج" data-price="120" data-en-name="1 Hour Massage" data-en-price="120" type="button"><span class="price-row-name" data-ar="ساعة مساج" data-en="1 Hour Massage">ساعة مساج</span><span class="price-row-amount">120 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span></button>
-          <button class="price-row" data-service="مساج 45 دقيقة" data-price="100" data-en-name="45 Min Massage" data-en-price="100" type="button"><span class="price-row-name" data-ar="مساج 45 دقيقة" data-en="45 Min Massage">مساج 45 دقيقة</span><span class="price-row-amount">100 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span></button>
-          <button class="price-row" data-service="مساج 30 دقيقة" data-price="70" data-en-name="30 Min Massage" data-en-price="70" type="button"><span class="price-row-name" data-ar="مساج 30 دقيقة" data-en="30 Min Massage">مساج 30 دقيقة</span><span class="price-row-amount">70 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span></button>
+          <button class="price-row" data-service="ساعة مساج" data-price="120" data-en-name="1 Hour Massage" data-en-price="120" type="button">
+            <span class="price-row-name" data-ar="ساعة مساج" data-en="1 Hour Massage">ساعة مساج</span>
+            <span class="price-row-amount">120 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+          </button>
+          <button class="price-row" data-service="مساج 45 دقيقة" data-price="100" data-en-name="45 Min Massage" data-en-price="100" type="button">
+            <span class="price-row-name" data-ar="مساج 45 دقيقة" data-en="45 Min Massage">مساج 45 دقيقة</span>
+            <span class="price-row-amount">100 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+          </button>
+          <button class="price-row" data-service="مساج 30 دقيقة" data-price="70" data-en-name="30 Min Massage" data-en-price="70" type="button">
+            <span class="price-row-name" data-ar="مساج 30 دقيقة" data-en="30 Min Massage">مساج 30 دقيقة</span>
+            <span class="price-row-amount">70 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+          </button>
         </div>
       </div>
       <div class="price-category" data-category="hammam">
-        <div class="price-category-head"><span class="price-category-icon">🌿</span><h3 data-ar="حمام مغربي" data-en="Moroccan Hammam">حمام مغربي</h3></div>
+        <div class="price-category-head">
+          <span class="price-category-icon">🌿</span>
+          <h3 data-ar="حمام مغربي" data-en="Moroccan Hammam">حمام مغربي</h3>
+        </div>
         <div class="price-rows">
-          <button class="price-row" data-service="حمام مغربي ملكي" data-price="150" data-en-name="Royal Moroccan Hammam" data-en-price="150" type="button"><span class="price-row-name" data-ar="حمام مغربي ملكي" data-en="Royal Moroccan Hammam">حمام مغربي ملكي</span><span class="price-row-amount">150 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span></button>
-          <button class="price-row" data-service="حمام مغربي" data-price="100" data-en-name="Moroccan Hammam" data-en-price="100" type="button"><span class="price-row-name" data-ar="حمام مغربي" data-en="Moroccan Hammam">حمام مغربي</span><span class="price-row-amount">100 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span></button>
-          <button class="price-row" data-service="حمام مغربي عادي" data-price="100" data-en-name="Regular Moroccan Hammam" data-en-price="100" type="button"><span class="price-row-name" data-ar="حمام مغربي عادي" data-en="Regular Moroccan Hammam">حمام مغربي عادي</span><span class="price-row-amount">100 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span></button>
+          <button class="price-row" data-service="حمام مغربي ملكي" data-price="150" data-en-name="Royal Moroccan Hammam" data-en-price="150" type="button">
+            <span class="price-row-name" data-ar="حمام مغربي ملكي" data-en="Royal Moroccan Hammam">حمام مغربي ملكي</span>
+            <span class="price-row-amount">150 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+          </button>
+          <button class="price-row" data-service="حمام مغربي" data-price="100" data-en-name="Moroccan Hammam" data-en-price="100" type="button">
+            <span class="price-row-name" data-ar="حمام مغربي" data-en="Moroccan Hammam">حمام مغربي</span>
+            <span class="price-row-amount">100 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+          </button>
+          <button class="price-row" data-service="حمام مغربي عادي" data-price="100" data-en-name="Regular Moroccan Hammam" data-en-price="100" type="button">
+            <span class="price-row-name" data-ar="حمام مغربي عادي" data-en="Regular Moroccan Hammam">حمام مغربي عادي</span>
+            <span class="price-row-amount">100 <span class="currency" data-ar="ريال" data-en="LYD">ريال</span></span>
+          </button>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- GALLERY -->
 <section class="gallery reveal-section" id="gallery">
   <div class="container">
     <div class="section-header">
@@ -485,9 +739,9 @@
       <button id="galleryLoadMore" type="button" data-ar="عرض المزيد من الصور" data-en="Show More Photos">عرض المزيد من الصور</button>
     </div>
   </div>
+
 </section>
 
-<!-- REVIEWS -->
 <section class="reviews reveal-section" id="reviews">
   <div class="container">
     <div class="section-header">
@@ -500,16 +754,116 @@
         <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 4.5L8 12l7.5 7.5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <div class="reviews-track" id="reviewsTrack">
-        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-ar="صالون حلاقة نظيف ومرتب جداً. علي عند الاستقبال كان لطيفاً جداً، وحلاقي كان أيوب الذي قام بعمل رائع وبسرعة. سأعود مستقبلاً. عدت بالفعل وكان حلاقي هذه المرة الأستاذ سعيد، وكان مرحباً ومحترفاً جداً. شكراً لكم." data-en="Very nice and clean barbershop. Ali was at the front desk and he was very nice. My barber for the day was Ayoub and he did a great job and very fast. I'll be coming back in the future. I've been back and my barber this time was Mr Said. He was very welcoming and professional. Thank you.">صالون حلاقة نظيف ومرتب جداً. علي عند الاستقبال كان لطيفاً جداً، وحلاقي كان أيوب الذي قام بعمل رائع وبسرعة. سأعود مستقبلاً. عدت بالفعل وكان حلاقي هذه المرة الأستاذ سعيد، وكان مرحباً ومحترفاً جداً. شكراً لكم.</p><div class="review-author"><div class="review-avatar">A</div><div><strong>Albert V</strong><span data-ar="عميل جوجل" data-en="Google Review">Albert V</span></div></div></div>
-        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-ar="الأستاذ سعيد قام بعمل رائع في تنظيف بشرتي وتهذيب لحيتي. كان شخصاً لطيفاً جداً للحديث معه! أعطاني تنظيف بشرة مميز وأخذ وقته بعناية. أنصح به بشدة!" data-en="Mr. Said did a wonderful job in my facial and beard trim. He was such a delight to talk to! He gave me a wonderful facial and took his time. I highly recommend him!">الأستاذ سعيد قام بعمل رائع في تنظيف بشرتي وتهذيب لحيتي. كان شخصاً لطيفاً جداً للحديث معه! أعطاني تنظيف بشرة مميز وأخذ وقته بعناية. أنصح به بشدة!</p><div class="review-author"><div class="review-avatar">Z</div><div><strong>Zohaib Raja</strong><span data-ar="عميل جوجل" data-en="Google Review">Zohaib Raja</span></div></div></div>
-        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-ar="مكان جميل وأجواء رائعة، تجربة جيدة مع أيوب، حلاق ماهر جداً في تهذيب اللحية والشعر." data-en="Good place, atmosphere, good experience with Ayoub perfect barber got an amazing skills with beard and hair">مكان جميل وأجواء رائعة، تجربة جيدة مع أيوب، حلاق ماهر جداً في تهذيب اللحية والشعر.</p><div class="review-author"><div class="review-avatar">A</div><div><strong>Abdulrahman Bakhsh</strong><span data-ar="عميل جوجل" data-en="Google Review">Abdulrahman Bakhsh</span></div></div></div>
-        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-ar="استقبال جميل وقصة شعر رائعة. أنصح بشدة بهذا المكان." data-en="I had a good welcoming and a nice haircut. I highly recommend this place.">استقبال جميل وقصة شعر رائعة. أنصح بشدة بهذا المكان.</p><div class="review-author"><div class="review-avatar">Y</div><div><strong>Younes</strong><span data-ar="عميل جوجل" data-en="Google Review">Younes</span></div></div></div>
-        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-ar="حلاق رائع ومحترف، شكراً لأيوب، خمسة من خمسة." data-en="Amazing & Professional barber and thank to Ayub thumbs up and 5/5">حلاق رائع ومحترف، شكراً لأيوب، خمسة من خمسة.</p><div class="review-author"><div class="review-avatar">A</div><div><strong>A. Abutaleb</strong><span data-ar="عميل جوجل" data-en="Google Review">A. Abutaleb</span></div></div></div>
-        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-ar="محمد قدم لي أفضل قصة شعر وتهذيب لحية، نحن من المملكة المتحدة وهذه القصة أفضل من هناك!" data-en="Mohammed gave best 10* haircut and beard trim, we're from UK and they give better haircut than UK!!">محمد قدم لي أفضل قصة شعر وتهذيب لحية، نحن من المملكة المتحدة وهذه القصة أفضل من هناك!</p><div class="review-author"><div class="review-avatar">M</div><div><strong>Mohammed Nadeem</strong><span data-ar="عميل جوجل" data-en="Google Review">Mohammed Nadeem</span></div></div></div>
-        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-ar="قصصت شعري هنا مع أيوب وأنا راضٍ جداً عن النتيجة." data-en="I just had a haircut here with Ayoub and I am very satisfied with it">قصصت شعري هنا مع أيوب وأنا راضٍ جداً عن النتيجة.</p><div class="review-author"><div class="review-avatar">M</div><div><strong>Mohanned Harbi</strong><span data-ar="عميل جوجل" data-en="Google Review">Mohanned Harbi</span></div></div></div>
-        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-ar="محمد ممتاز جداً." data-en="Mohamed very good">محمد ممتاز جداً.</p><div class="review-author"><div class="review-avatar">A</div><div><strong>Abdullah Nagi</strong><span data-ar="عميل جوجل" data-en="Google Review">Abdullah Nagi</span></div></div></div>
-        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-ar="الأستاذ سعيد هو الأفضل." data-en="Mr. Said is the best.">الأستاذ سعيد هو الأفضل.</p><div class="review-author"><div class="review-avatar">И</div><div><strong>Iliyan Iliev</strong><span data-ar="عميل جوجل" data-en="Google Review">Iliyan Iliev</span></div></div></div>
-        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text" data-ar="الأستاذ سعيد بمستوى عالمي." data-en="Mr. SAID TOP CLASS">الأستاذ سعيد بمستوى عالمي.</p><div class="review-author"><div class="review-avatar">J</div><div><strong>José Melícias</strong><span data-ar="عميل جوجل" data-en="Google Review">José Melícias</span></div></div></div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text" data-ar="صالون حلاقة نظيف ومرتب جداً. علي عند الاستقبال كان لطيفاً جداً، وحلاقي كان أيوب الذي قام بعمل رائع وبسرعة. سأعود مستقبلاً. عدت بالفعل وكان حلاقي هذه المرة الأستاذ سعيد، وكان مرحباً ومحترفاً جداً. شكراً لكم." data-en="Very nice and clean barbershop. Ali was at the front desk and he was very nice. My barber for the day was Ayoub and he did a great job and very fast. I'll be coming back in the future. I've been back and my barber this time was Mr Said. He was very welcoming and professional. Thank you.">صالون حلاقة نظيف ومرتب جداً. علي عند الاستقبال كان لطيفاً جداً، وحلاقي كان أيوب الذي قام بعمل رائع وبسرعة. سأعود مستقبلاً. عدت بالفعل وكان حلاقي هذه المرة الأستاذ سعيد، وكان مرحباً ومحترفاً جداً. شكراً لكم.</p>
+          <div class="review-author">
+            <div class="review-avatar">A</div>
+            <div>
+              <strong>Albert V</strong>
+              <span data-ar="عميل جوجل" data-en="Google Review">Albert V</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text" data-ar="الأستاذ سعيد قام بعمل رائع في تنظيف بشرتي وتهذيب لحيتي. كان شخصاً لطيفاً جداً للحديث معه! أعطاني تنظيف بشرة مميز وأخذ وقته بعناية. أنصح به بشدة!" data-en="Mr. Said did a wonderful job in my facial and beard trim. He was such a delight to talk to! He gave me a wonderful facial and took his time. I highly recommend him!">الأستاذ سعيد قام بعمل رائع في تنظيف بشرتي وتهذيب لحيتي. كان شخصاً لطيفاً جداً للحديث معه! أعطاني تنظيف بشرة مميز وأخذ وقته بعناية. أنصح به بشدة!</p>
+          <div class="review-author">
+            <div class="review-avatar">Z</div>
+            <div>
+              <strong>Zohaib Raja</strong>
+              <span data-ar="عميل جوجل" data-en="Google Review">Zohaib Raja</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text" data-ar="مكان جميل وأجواء رائعة، تجربة جيدة مع أيوب، حلاق ماهر جداً في تهذيب اللحية والشعر." data-en="Good place, atmosphere, good experience with Ayoub perfect barber got an amazing skills with beard and hair">مكان جميل وأجواء رائعة، تجربة جيدة مع أيوب، حلاق ماهر جداً في تهذيب اللحية والشعر.</p>
+          <div class="review-author">
+            <div class="review-avatar">A</div>
+            <div>
+              <strong>Abdulrahman Bakhsh</strong>
+              <span data-ar="عميل جوجل" data-en="Google Review">Abdulrahman Bakhsh</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text" data-ar="استقبال جميل وقصة شعر رائعة. أنصح بشدة بهذا المكان." data-en="I had a good welcoming and a nice haircut. I highly recommend this place.">استقبال جميل وقصة شعر رائعة. أنصح بشدة بهذا المكان.</p>
+          <div class="review-author">
+            <div class="review-avatar">Y</div>
+            <div>
+              <strong>Younes</strong>
+              <span data-ar="عميل جوجل" data-en="Google Review">Younes</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text" data-ar="حلاق رائع ومحترف، شكراً لأيوب، خمسة من خمسة." data-en="Amazing & Professional barber and thank to Ayub thumbs up and 5/5">حلاق رائع ومحترف، شكراً لأيوب، خمسة من خمسة.</p>
+          <div class="review-author">
+            <div class="review-avatar">A</div>
+            <div>
+              <strong>A. Abutaleb</strong>
+              <span data-ar="عميل جوجل" data-en="Google Review">A. Abutaleb</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text" data-ar="محمد قدم لي أفضل قصة شعر وتهذيب لحية، نحن من المملكة المتحدة وهذه القصة أفضل من هناك!" data-en="Mohammed gave best 10* haircut and beard trim, we're from UK and they give better haircut than UK!!">محمد قدم لي أفضل قصة شعر وتهذيب لحية، نحن من المملكة المتحدة وهذه القصة أفضل من هناك!</p>
+          <div class="review-author">
+            <div class="review-avatar">M</div>
+            <div>
+              <strong>Mohammed Nadeem</strong>
+              <span data-ar="عميل جوجل" data-en="Google Review">Mohammed Nadeem</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text" data-ar="قصصت شعري هنا مع أيوب وأنا راضٍ جداً عن النتيجة." data-en="I just had a haircut here with Ayoub and I am very satisfied with it">قصصت شعري هنا مع أيوب وأنا راضٍ جداً عن النتيجة.</p>
+          <div class="review-author">
+            <div class="review-avatar">M</div>
+            <div>
+              <strong>Mohanned Harbi</strong>
+              <span data-ar="عميل جوجل" data-en="Google Review">Mohanned Harbi</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text" data-ar="محمد ممتاز جداً." data-en="Mohamed very good">محمد ممتاز جداً.</p>
+          <div class="review-author">
+            <div class="review-avatar">A</div>
+            <div>
+              <strong>Abdullah Nagi</strong>
+              <span data-ar="عميل جوجل" data-en="Google Review">Abdullah Nagi</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text" data-ar="الأستاذ سعيد هو الأفضل." data-en="Mr. Said is the best.">الأستاذ سعيد هو الأفضل.</p>
+          <div class="review-author">
+            <div class="review-avatar">И</div>
+            <div>
+              <strong>Iliyan Iliev</strong>
+              <span data-ar="عميل جوجل" data-en="Google Review">Iliyan Iliev</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text" data-ar="الأستاذ سعيد بمستوى عالمي." data-en="Mr. SAID TOP CLASS">الأستاذ سعيد بمستوى عالمي.</p>
+          <div class="review-author">
+            <div class="review-avatar">J</div>
+            <div>
+              <strong>José Melícias</strong>
+              <span data-ar="عميل جوجل" data-en="Google Review">José Melícias</span>
+            </div>
+          </div>
+        </div>
       </div>
       <button class="reviews-arrow reviews-arrow-next" id="reviewsNext" aria-label="التالي" type="button">
         <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M8.5 4.5L16 12l-7.5 7.5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -523,7 +877,6 @@
   </div>
 </section>
 
-<!-- CTA / BOOKING -->
 <section class="cta-section reveal-section" id="booking">
   <div class="cta-inner">
     <p class="section-eyebrow" data-ar="احجز الآن" data-en="Book Now">احجز الآن</p>
@@ -533,7 +886,6 @@
   </div>
 </section>
 
-<!-- CONTACT -->
 <section class="contact reveal-section" id="contact">
   <div class="container">
     <div class="section-header">
@@ -541,20 +893,39 @@
       <h2 data-ar="موقعنا وأوقات العمل" data-en="Location & Hours">موقعنا وأوقات العمل</h2>
     </div>
     <div class="contact-grid">
-      <a href="https://www.google.com/maps/place/Casastar+barber+shop/@24.4521325,39.6447169,15z/data=!4m10!1m2!2m1!1sSaudi+Arabia++casastar+barbershop!3m6!1s0x15bdbf00373b1491:0x5a2d6ffa06095b67!8m2!3d24.4521325!4d39.6447169!15sCiFTYXVkaSBBcmFiaWEgIGNhc2FzdGFyIGJhcmJlcnNob3BaIiIgc2F1ZGkgYXJhYmlhIGNhc2FzdGFyIGJhcmJlcnNob3CSAQpoYWlyX3NhbG9umgEkQ2hkRFNVaE5NRzluUzBWSlEwRm5UVU5KZWpodE1tMTNSUkFC4AEA-gEECFAQRQ!16s%2Fg%2F11ldrwhwwv?entry=ttu&g_ep=EgoyMDI2MDYxNi4wIKXMDSoASAFQAw%3D%3D" class="contact-card is-link" target="_blank" rel="noopener noreferrer" aria-label="افتح الموقع في خرائط جوجل"><div class="contact-icon">📍</div><h3 data-ar="العنوان" data-en="Address">العنوان</h3><p>3036 شارع الأمير عبدالمجيد بن عبدالعزيز، حي الاسكان،  42317</p></a>
-      <div class="contact-card"><div class="contact-icon">⏰</div><h3 data-ar="أوقات العمل" data-en="Working Hours">أوقات العمل</h3><p data-ar="مفتوح 24 ساعة طوال أيام الأسبوع" data-en="Open 24 hours, 7 days a week">مفتوح 24 ساعة طوال أيام الأسبوع</p></div>
-      <div class="contact-card"><div class="contact-icon">📞</div><h3 data-ar="اتصل بنا" data-en="Call Us">اتصل بنا</h3><a href="tel:+966000000000" class="contact-link" id="contactPhoneLink">+966 00 000 0000</a></div>
-      <div class="contact-card"><div class="contact-icon">💬</div><h3 data-ar="احجز عبر واتساب أو تيك توك" data-en="Book via WhatsApp or TikTok">احجز عبر واتساب أو تيك توك</h3><button type="button" class="contact-link" id="whatsappContactLink" data-ar="ابدأ الحجز" data-en="Start Booking">ابدأ الحجز</button></div>
+      <a href="https://www.google.com/maps/place/Casastar+barber+shop/@24.4521325,39.6447169,15z/data=!4m10!1m2!2m1!1sSaudi+Arabia++casastar+barbershop!3m6!1s0x15bdbf00373b1491:0x5a2d6ffa06095b67!8m2!3d24.4521325!4d39.6447169!15sCiFTYXVkaSBBcmFiaWEgIGNhc2FzdGFyIGJhcmJlcnNob3BaIiIgc2F1ZGkgYXJhYmlhIGNhc2FzdGFyIGJhcmJlcnNob3CSAQpoYWlyX3NhbG9umgEkQ2hkRFNVaE5NRzluUzBWSlEwRm5UVU5KZWpodE1tMTNSUkFC4AEA-gEECFAQRQ!16s%2Fg%2F11ldrwhwwv?entry=ttu&g_ep=EgoyMDI2MDYxNi4wIKXMDSoASAFQAw%3D%3D" class="contact-card is-link" target="_blank" rel="noopener noreferrer" aria-label="افتح الموقع في خرائط جوجل">
+        <div class="contact-icon">📍</div>
+        <h3 data-ar="العنوان" data-en="Address">العنوان</h3>
+        <p>3036 شارع الأمير عبدالمجيد بن عبدالعزيز، حي الاسكان،  42317</p>
+      </a>
+      <div class="contact-card">
+        <div class="contact-icon">⏰</div>
+        <h3 data-ar="أوقات العمل" data-en="Working Hours">أوقات العمل</h3>
+        <p data-ar="مفتوح 24 ساعة طوال أيام الأسبوع" data-en="Open 24 hours, 7 days a week">مفتوح 24 ساعة طوال أيام الأسبوع</p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📞</div>
+        <h3 data-ar="اتصل بنا" data-en="Call Us">اتصل بنا</h3>
+        <a href="tel:+966000000000" class="contact-link">+966 00 000 0000</a>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">💬</div>
+        <h3 data-ar="احجز عبر واتساب أو تيك توك" data-en="Book via WhatsApp or TikTok">احجز عبر واتساب أو تيك توك</h3>
+        <button type="button" class="contact-link" id="whatsappContactLink" data-ar="ابدأ الحجز" data-en="Start Booking">ابدأ الحجز</button>
+      </div>
     </div>
   </div>
 </section>
 
 </main>
 
-<!-- ===== FOOTER ===== -->
 <footer>
   <div class="footer-inner container">
-    <div class="footer-logo"><span class="logo-ar">صالون حلاقة</span><span class="logo-divider">|</span><span class="logo-en">BARBERSHOP</span></div>
+    <div class="footer-logo">
+      <span class="logo-ar">صالون حلاقة</span>
+      <span class="logo-divider">|</span>
+      <span class="logo-en">BARBERSHOP</span>
+    </div>
     <p class="footer-tagline" data-ar="للإسترخاء والعناية الفاخرة • " data-en="For Relaxation & Luxury Care • ">للإسترخاء والعناية الفاخرة &bull; </p>
     <div class="footer-links">
       <a href="#services" data-ar="الخدمات" data-en="Services">الخدمات</a>
@@ -564,275 +935,27 @@
       <button type="button" id="footerContactLink" data-ar="التواصل" data-en="Contact">التواصل</button>
     </div>
     <div class="footer-socials">
-      <a href="https://www.tiktok.com/?_r=1&_t=ZS-97NHnXiU8lY" target="_blank" rel="noopener noreferrer" class="social-btn tiktok-btn" aria-label="TikTok"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.95a8.16 8.16 0 0 0 4.77 1.52V7.02a4.85 4.85 0 0 1-1-.33z"/></svg><span>TikTok</span></a>
-      <button type="button" class="social-btn whatsapp-btn" id="footerWaBtn" aria-label="WhatsApp"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg><span data-ar="واتساب" data-en="WhatsApp">واتساب</span></button>
+      <a href="https://www.tiktok.com/?_r=1&_t=ZS-97NHnXiU8lY" target="_blank" rel="noopener noreferrer" class="social-btn tiktok-btn" aria-label="TikTok">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.95a8.16 8.16 0 0 0 4.77 1.52V7.02a4.85 4.85 0 0 1-1-.33z"/></svg>
+        <span>TikTok</span>
+      </a>
+      <button type="button" class="social-btn whatsapp-btn" id="footerWaBtn" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        <span data-ar="واتساب" data-en="WhatsApp">واتساب</span>
+      </button>
     </div>
     <p class="footer-copy">© 2025  للإسترخاء. جميع الحقوق محفوظة.</p>
   </div>
 </footer>
 
-<!-- ===== FLOATING BUTTONS ===== -->
-<button type="button" class="tiktok-float" id="tiktokFloat" aria-label="احجز عبر تيك توك"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.95a8.16 8.16 0 0 0 4.77 1.52V7.02a4.85 4.85 0 0 1-1-.33z"/></svg></button>
-<button type="button" class="whatsapp-float" id="whatsappFloat" aria-label="احجز عبر واتساب"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg></button>
+<!-- TikTok float — ABOVE WhatsApp -->
+<button type="button" class="tiktok-float" id="tiktokFloat" aria-label="احجز عبر تيك توك">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.95a8.16 8.16 0 0 0 4.77 1.52V7.02a4.85 4.85 0 0 1-1-.33z"/>
+  </svg>
+</button>
 
-<!-- ===== PLATFORM PICKER MODAL ===== -->
-<div class="platform-picker-overlay" id="platformPickerOverlay" role="dialog" aria-modal="true" aria-label="اختر طريقة التواصل">
-  <div class="platform-picker-modal" id="platformPickerModal">
-    <button type="button" class="platform-picker-close" id="platformPickerClose" aria-label="إغلاق">✕</button>
-    <div class="platform-picker-header"><h2 data-ar="كيف تحب تكمل حجزك؟" data-en="How would you like to book?">كيف تحب تكمل حجزك؟</h2><p data-ar="اختر وسيلة التواصل المفضلة لإتمام الحجز والدفع" data-en="Choose your preferred platform to complete your booking and payment">اختر وسيلة التواصل المفضلة لإتمام الحجز والدفع</p></div>
-    <div class="platform-picker-options">
-      <button type="button" class="platform-opt platform-opt-whatsapp" data-platform="whatsapp"><span class="platform-opt-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg></span><span class="platform-opt-text"><strong data-ar="واتساب" data-en="WhatsApp">واتساب</strong><span data-ar="تواصل وحجز سريع" data-en="Quick chat & booking">تواصل وحجز سريع</span></span><span class="platform-opt-arrow">←</span></button>
-      <button type="button" class="platform-opt platform-opt-tiktok" data-platform="tiktok"><span class="platform-opt-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.95a8.16 8.16 0 0 0 4.77 1.52V7.02a4.85 4.85 0 0 1-1-.33z"/></svg></span><span class="platform-opt-text"><strong data-ar="تيك توك" data-en="TikTok">تيك توك</strong><span data-ar="راسلنا عبر تيك توك" data-en="Message us on TikTok">راسلنا عبر تيك توك</span></span><span class="platform-opt-arrow">←</span></button>
-    </div>
-  </div>
-</div>
-
-<!-- ===== BOOKING CHAT ===== -->
-<div class="booking-chat-overlay" id="bookingOverlay" role="dialog" aria-modal="true" aria-label="نافذة الحجز">
-  <div class="booking-chat" id="bookingChat">
-    <div class="chat-header" id="chatHeader"><div class="chat-avatar" id="chatAvatar"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.64 7.64a1 1 0 1 0-2 0 1 1 0 0 0 2 0zM21 4l-9 9M3 21l5.5-5.5M9 14l1.5-1.5M14 9l1.5-1.5" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="6" r="3" stroke="white" stroke-width="2" fill="none"/><circle cx="6" cy="18" r="3" stroke="white" stroke-width="2" fill="none"/></svg></div><div class="chat-header-info"><strong data-ar=" للإسترخاء" data-en="Relaxation"> للإسترخاء</strong><span class="chat-online" data-ar="متاح الآن" data-en="Available Now">متاح الآن</span></div><button class="chat-close" id="chatClose" aria-label="إغلاق">✕</button></div>
-    <div class="chat-body" id="chatBody"><div class="chat-msg bot"><p data-ar="أهلاً بك في  للإسترخاء 👋 من خلال أي وسيلة تفضل إتمام حجزك؟" data-en="Welcome to Relaxation 👋 Which platform would you like to use to complete your booking?">أهلاً بك في  للإسترخاء 👋 من خلال أي وسيلة تفضل إتمام حجزك؟</p></div></div>
-  </div>
-</div>
-
-<!-- ===== PAYMENT MODAL ===== -->
-<div class="payment-overlay" id="paymentOverlay" role="dialog" aria-modal="true" aria-label="الدفع الإلكتروني">
-  <div class="payment-modal" id="paymentModal">
-    <button class="payment-close" id="paymentClose" aria-label="إغلاق">✕</button>
-    <div class="pay-step" id="payStep1">
-      <div class="pay-header"><div class="pay-icon">💳</div><h2 class="pay-title" data-ar="إتمام الدفع" data-en="Complete Payment">إتمام الدفع</h2><p class="pay-sub" data-ar="اختر طريقة الدفع للمتابعة" data-en="Choose a payment method to proceed">اختر طريقة الدفع للمتابعة</p></div>
-      <div class="pay-summary" id="paySummary"><div class="pay-summary-row"><span data-ar="الخدمة" data-en="Service">الخدمة</span><strong id="summaryService">—</strong></div><div class="pay-summary-row"><span data-ar="الاسم" data-en="Name">الاسم</span><strong id="summaryName">—</strong></div><div class="pay-summary-row"><span data-ar="التاريخ والوقت" data-en="Date & Time">التاريخ والوقت</span><strong id="summaryDateTime">—</strong></div><div class="pay-summary-total"><span data-ar="المبلغ الإجمالي" data-en="Total Amount">المبلغ الإجمالي</span><strong class="pay-amount" id="summaryAmount">— <span data-ar="ريال" data-en="LYD">ريال</span></strong></div></div>
-      <p class="pay-method-label" data-ar="🏦 اختر طريقة الدفع — مطلوب" data-en="🏦 Choose Payment Method — Required">🏦 اختر طريقة الدفع — مطلوب</p>
-      <div class="pay-methods">
-        <button class="pay-method-btn" data-method="bank" type="button"><div class="pay-method-icon">🏦</div><div class="pay-method-info"><strong data-ar="تحويل بنكي" data-en="Bank Transfer">تحويل بنكي</strong><span data-ar="البنك الأهلي السعودي" data-en="Saudi National Bank">البنك الأهلي السعودي</span></div></button>
-        <button class="pay-method-btn" data-method="stc" type="button"><div class="pay-method-icon">📱</div><div class="pay-method-info"><strong>STC Pay</strong><span data-ar="الدفع عبر STC Pay" data-en="Pay via STC Pay">الدفع عبر STC Pay</span></div></button>
-        <button class="pay-method-btn" data-method="mada" type="button"><div class="pay-method-icon">💳</div><div class="pay-method-info"><strong>مدى / Mada</strong><span data-ar="بطاقة مدى" data-en="Mada Debit Card">بطاقة مدى</span></div></button>
-      </div>
-      <p class="pay-required-hint" id="payRequiredHint" style="display:none;" data-ar="⚠ يرجى اختيار طريقة دفع للمتابعة" data-en="⚠ Please select a payment method to continue">⚠ يرجى اختيار طريقة دفع للمتابعة</p>
-      <button class="pay-confirm-btn" id="payProceedBtn" type="button" data-ar="متابعة الدفع ←" data-en="Proceed to Payment →">متابعة الدفع ←</button>
-    </div>
-    <div class="pay-step" id="payStepBank" style="display:none;">
-      <button class="pay-back-btn" id="payBackBank" type="button">← <span data-ar="رجوع" data-en="Back">رجوع</span></button>
-      <div class="pay-header"><div class="pay-icon">🏦</div><h2 class="pay-title" data-ar="التحويل البنكي" data-en="Bank Transfer">التحويل البنكي</h2><p class="pay-sub" data-ar="البنك الأهلي السعودي — مؤسسة الأهلي" data-en="Saudi National Bank — Al Ahli">البنك الأهلي السعودي — مؤسسة الأهلي</p></div>
-      <div class="bank-details-card"><div class="bank-detail-row"><span data-ar="اسم المستفيد" data-en="Beneficiary Name">اسم المستفيد</span><strong data-ar=" للإسترخاء" data-en="Relaxation"> للإسترخاء</strong></div><div class="bank-detail-row"><span data-ar="البنك" data-en="Bank">البنك</span><strong data-ar="البنك الأهلي السعودي" data-en="Saudi National Bank (Al Ahli)">البنك الأهلي السعودي</strong></div><div class="bank-detail-row iban-row"><span>IBAN</span><div class="iban-copy-wrap"><strong class="iban-value" id="ibanValue" dir="ltr">SA00 0000 0000 0000 0000 0000</strong><button class="copy-btn" id="copyIban" type="button" aria-label="Copy IBAN"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></div><div class="bank-detail-row pay-amount-highlight"><span data-ar="المبلغ المطلوب" data-en="Amount Due">المبلغ المطلوب</span><strong class="pay-amount" id="bankAmount">— <span data-ar="ريال" data-en="LYD">ريال</span></strong></div></div>
-      <div class="pay-instructions"><p data-ar="📌 تعليمات:" data-en="📌 Instructions:">📌 تعليمات:</p><ol><li data-ar="حوّل المبلغ المذكور إلى الحساب أعلاه" data-en="Transfer the exact amount to the account above">حوّل المبلغ المذكور إلى الحساب أعلاه</li><li data-ar="اكتب اسمك ورقم الهاتف في خانة الملاحظات" data-en="Include your name and phone in the notes field">اكتب اسمك ورقم الهاتف في خانة الملاحظات</li><li id="bankReceiptStep" data-ar="أرسل صورة الإيصال عبر واتساب لتأكيد الحجز" data-en="Send the receipt screenshot via WhatsApp to confirm">أرسل صورة الإيصال عبر واتساب لتأكيد الحجز</li></ol></div>
-      <button class="pay-confirm-btn" id="bankWhatsappBtn" type="button" data-ar="✅ أرسل إيصال الدفع عبر واتساب" data-en="✅ Send Payment Receipt via WhatsApp">✅ أرسل إيصال الدفع عبر واتساب</button>
-    </div>
-    <div class="pay-step" id="payStepDigital" style="display:none;">
-      <button class="pay-back-btn" id="payBackDigital" type="button">← <span data-ar="رجوع" data-en="Back">رجوع</span></button>
-      <div class="pay-header"><div class="pay-icon" id="digitalMethodIcon">📱</div><h2 class="pay-title" id="digitalMethodTitle">STC Pay</h2><p class="pay-sub" id="digitalMethodSub" data-ar="تحويل سريع عبر الجوال" data-en="Fast mobile payment">تحويل سريع عبر الجوال</p></div>
-      <div class="bank-details-card"><div class="bank-detail-row"><span data-ar="المستفيد" data-en="Recipient">المستفيد</span><strong data-ar=" للإسترخاء" data-en="Relaxation"> للإسترخاء</strong></div><div class="bank-detail-row"><span data-ar="رقم الجوال" data-en="Mobile Number">رقم الجوال</span><div class="iban-copy-wrap"><strong class="iban-value" dir="ltr">+966 00 000 0000</strong><button class="copy-btn" id="copyMobile" type="button" aria-label="Copy number"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></div><div class="bank-detail-row pay-amount-highlight"><span data-ar="المبلغ المطلوب" data-en="Amount Due">المبلغ المطلوب</span><strong class="pay-amount" id="digitalAmount">— <span data-ar="ريال" data-en="LYD">ريال</span></strong></div></div>
-      <div class="pay-digital-steps"><div class="digital-step"><div class="digital-step-num">1</div><p id="digitalStep1Ar">افتح تطبيق STC Pay على جوالك</p></div><div class="digital-step"><div class="digital-step-num">2</div><p data-ar="اختر «تحويل» ثم أدخل رقم الجوال أعلاه" data-en="Choose «Transfer» then enter the mobile number above">اختر «تحويل» ثم أدخل رقم الجوال أعلاه</p></div><div class="digital-step"><div class="digital-step-num">3</div><p data-ar="أدخل المبلغ بالضبط واكتب اسمك في خانة الملاحظات" data-en="Enter the exact amount and write your name in the notes">أدخل المبلغ بالضبط واكتب اسمك في خانة الملاحظات</p></div><div class="digital-step"><div class="digital-step-num">4</div><p id="digitalReceiptStep" data-ar="أرسل صورة الإيصال عبر واتساب لتأكيد موعدك" data-en="Send the receipt screenshot via WhatsApp to confirm">أرسل صورة الإيصال عبر واتساب لتأكيد موعدك</p></div></div>
-      <button class="pay-confirm-btn" id="digitalWhatsappBtn" type="button" data-ar="✅ أرسل إيصال الدفع عبر واتساب" data-en="✅ Send Payment Receipt via WhatsApp">✅ أرسل إيصال الدفع عبر واتساب</button>
-    </div>
-    <div class="pay-step" id="payStepSuccess" style="display:none;"><div class="pay-success"><div class="pay-success-icon">✅</div><h2 data-ar="تم إرسال طلبك!" data-en="Booking Sent!">تم إرسال طلبك!</h2><p data-ar="سيتواصل معك صاحب الصالون لتأكيد موعدك قريباً." data-en="The salon owner will contact you shortly to confirm your appointment.">سيتواصل معك صاحب الصالون لتأكيد موعدك قريباً.</p><button class="pay-confirm-btn" id="payDoneBtn" type="button" data-ar="إغلاق" data-en="Close">إغلاق</button></div></div>
-  </div>
-</div>
-
-<!-- ===== THEME & COLOR PICKER ===== -->
-<div class="theme-picker" id="themePicker">
-  <button class="theme-picker-toggle" id="themePickerToggle" type="button" aria-label="Customize colors" data-ar="تخصيص الألوان" data-en="Customize Colors"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 21a9 9 0 1 1 0-18c4.97 0 9 3.5 9 7.5 0 1.93-1.57 3.5-3.5 3.5h-1.78c-.78 0-1.43.65-1.43 1.43 0 .35.13.66.35.91.22.25.35.56.35.91A2.25 2.25 0 0 1 12.69 21H12Z"/></svg></button>
-  <div class="theme-picker-panel" id="themePickerPanel" hidden>
-    <div class="theme-picker-header"><span data-ar="جرّب الألوان" data-en="Try Colors">جرّب الألوان</span><button class="theme-picker-close" id="themePickerClose" type="button" aria-label="Close">✕</button></div>
-    <p class="theme-picker-sub" data-ar="اختر شكل الموقع كما تريده" data-en="Pick how you want the site to look">اختر شكل الموقع كما تريده</p>
-    <div class="theme-picker-themes"><button class="theme-swatch-btn" data-theme="gold" type="button"><span class="theme-swatch" style="background:linear-gradient(135deg,#080808,#C9A84C)"></span><span data-ar="ذهبي" data-en="Gold">ذهبي</span></button><button class="theme-swatch-btn" data-theme="emerald" type="button"><span class="theme-swatch" style="background:linear-gradient(135deg,#07120E,#C7A86B)"></span><span data-ar="زمردي" data-en="Emerald">زمردي</span></button></div>
-    <p class="theme-picker-sub" data-ar="أو اختر لونك الخاص" data-en="Or pick your own color">أو اختر لونك الخاص</p>
-    <div class="theme-picker-custom"><input type="color" id="customColorInput" value="#C9A84C" aria-label="Custom accent color"><code class="theme-picker-hex" id="customColorHex">#C9A84C</code><button class="theme-picker-copy" id="customColorCopy" type="button" data-ar="نسخ الكود" data-en="Copy Code">نسخ الكود</button></div>
-    <p class="theme-picker-hint" data-ar="📸 خذ لقطة شاشة أو أرسل لنا الكود ليصبح هذا تصميم موقعك" data-en="📸 Screenshot this or send us the code to make this your site's design">📸 خذ لقطة شاشة أو أرسل لنا الكود ليصبح هذا تصميم موقعك</p>
-  </div>
-</div>
-
-<!-- ===== DYNAMIC DATA LOADING SCRIPT ===== -->
-<script>
-(function() {
-  // Fallback images from Unsplash (barbershop themed)
-  const FALLBACK_IMAGES = [
-    'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=800&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1560066984-9f4e1e7c3b56?w=800&auto=format&fit=crop'
-  ];
-
-  function getParam(name) {
-    const url = new URL(window.location);
-    return url.searchParams.get(name);
-  }
-
-  // Extract images from demo_url, or return fallback
-  function extractImages(demo_url) {
-    if (!demo_url) return FALLBACK_IMAGES;
-    const match = demo_url.match(/images=([^&]*)/);
-    if (match && match[1]) {
-      const raw = decodeURIComponent(match[1]);
-      const urls = raw.split(',').map(s => s.trim()).filter(s => s.startsWith('http'));
-      if (urls.length > 0) return urls;
-    }
-    if (demo_url.startsWith('http') && (demo_url.includes('.jpg') || demo_url.includes('.png') || demo_url.includes('.jpeg') || demo_url.includes('.webp'))) {
-      return [demo_url];
-    }
-    return FALLBACK_IMAGES;
-  }
-
-  // Set images on hero and #businessImages
-  function setImages(images) {
-    if (!images || images.length === 0) images = FALLBACK_IMAGES;
-    const heroBg = document.querySelector('.hero-bg');
-    if (heroBg) {
-      heroBg.style.backgroundImage = `url(${images[0]})`;
-      heroBg.style.backgroundSize = 'cover';
-      heroBg.style.backgroundPosition = 'center';
-    }
-    const heroImg = document.querySelector('.hero-img');
-    if (heroImg) heroImg.src = images[0];
-    const container = document.getElementById('businessImages');
-    if (container) {
-      container.innerHTML = images.map(src => `<img src="${src}" alt="صالون حلاقة" loading="lazy">`).join('');
-    }
-  }
-
-  // Apply fallback immediately so page always has images
-  setImages(FALLBACK_IMAGES);
-
-  const id = getParam('id');
-  let file = getParam('file');
-  if (!file) file = 'master.json';
-
-  if (id === null) {
-    // No business ID, keep fallback images
-    console.log('No business ID provided. Showing fallback images.');
-    return;
-  }
-
-  const jsonPath = `data/${file}`;
-
-  fetch(jsonPath)
-    .then(res => {
-      if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
-      return res.json();
-    })
-    .then(data => {
-      const biz = data.find(b => b.id == id);
-      if (!biz) {
-        console.warn(`Business with ID ${id} not found in ${file}`);
-        return;
-      }
-
-      // Update text content
-      function updateText(selector, text) {
-        const el = document.querySelector(selector);
-        if (el) el.textContent = text;
-      }
-
-      const name = biz.name || 'صالون حلاقة';
-      const phone = biz.phone || '+966000000000';
-      const address = biz.address || 'العنوان غير متوفر';
-      const city = biz.city || '';
-      const niche = biz.niche || 'Barbershop';
-
-      document.title = `${name} | Barber Shop`;
-      const metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc) metaDesc.content = `${name} - أفضل صالون حلاقة ومساج في ${city}. خدمات حلاقة VIP، حمام مغربي، مساج استرخاء. مفتوح 24 ساعة.`;
-      const metaKeywords = document.querySelector('meta[name="keywords"]');
-      if (metaKeywords) metaKeywords.content = `${name}, صالون حلاقة ${city}, حمام مغربي, مساج استرخاء, barber shop, حلاقة VIP`;
-      const ogTitle = document.querySelector('meta[property="og:title"]');
-      if (ogTitle) ogTitle.content = `${name} | Barber Shop`;
-      const ogDesc = document.querySelector('meta[property="og:description"]');
-      if (ogDesc) ogDesc.content = `أفضل صالون حلاقة ومساج في ${city}. حمام مغربي، مساج استرخاء، حلاقة VIP. مفتوح 24 ساعة.`;
-
-      // Schema
-      const schemaScript = document.getElementById('schemaOrg');
-      if (schemaScript) {
-        try {
-          const schema = JSON.parse(schemaScript.textContent);
-          schema.name = name;
-          schema.alternateName = name;
-          schema.description = `أفضل صالون حلاقة ومساج في ${city}. خدمات حلاقة VIP، حمام مغربي، مساج استرخاء.`;
-          if (schema.address) {
-            schema.address.streetAddress = address;
-            schema.address.addressLocality = city;
-          }
-          schema.telephone = phone;
-          schema.hasMap = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
-          const images = extractImages(biz.demo_url);
-          if (images.length > 0) schema.image = images[0];
-          schemaScript.textContent = JSON.stringify(schema, null, 2);
-        } catch (e) { /* ignore */ }
-      }
-
-      // Hero text
-      const heroTitle = document.querySelector('.hero-title');
-      if (heroTitle) heroTitle.textContent = name;
-      const heroSub = document.querySelector('.hero-sub');
-      if (heroSub) heroSub.textContent = niche === 'Barbershop' ? 'صالون حلاقة احترافي' : niche;
-
-      // About
-      const aboutDesc = document.querySelector('.about-desc');
-      if (aboutDesc) {
-        aboutDesc.textContent = `${name} هو وجهتك الأولى للعناية بنفسك. نقدم خدمات حلاقة فاخرة، مساج احترافي، وحمام مغربي أصيل على أيدي خبراء متخصصين.`;
-      }
-
-      // Contact
-      const addressEl = document.querySelector('.contact-card:first-child p');
-      if (addressEl) addressEl.textContent = address;
-      const phoneLink = document.getElementById('contactPhoneLink');
-      if (phoneLink) {
-        phoneLink.textContent = phone;
-        phoneLink.href = `tel:${phone}`;
-      }
-
-      // Images (override fallback)
-      const bizImages = extractImages(biz.demo_url);
-      setImages(bizImages);
-
-      // Update WhatsApp links with new phone number
-      function updateWhatsAppLinks(phoneNumber) {
-        const cleanPhone = phoneNumber.replace(/[^0-9]/g, '');
-        const message = encodeURIComponent('مرحباً، أريد حجز موعد');
-        document.querySelectorAll('#openChatBtn, #whatsappFloat, #footerWaBtn, #whatsappContactLink').forEach(btn => {
-          btn.onclick = function(e) {
-            e.preventDefault();
-            window.open(`https://wa.me/${cleanPhone}?text=${message}`, '_blank');
-          };
-        });
-        document.querySelectorAll('.price-row').forEach(row => {
-          const service = row.getAttribute('data-service');
-          const price = row.getAttribute('data-price');
-          row.onclick = function(e) {
-            e.preventDefault();
-            const msg = encodeURIComponent(`مرحباً، أرغب في حجز خدمة "${service}" بسعر ${price} ريال`);
-            window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
-          };
-        });
-        document.querySelectorAll('.btn-book-service').forEach(btn => {
-          const card = btn.closest('.service-card');
-          if (card) {
-            const service = card.getAttribute('data-service');
-            const price = card.getAttribute('data-price');
-            btn.onclick = function(e) {
-              e.preventDefault();
-              const msg = encodeURIComponent(`مرحباً، أرغب في حجز خدمة "${service}" بسعر ${price} ريال`);
-              window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
-            };
-          }
-        });
-        const waOpt = document.querySelector('.platform-opt-whatsapp');
-        if (waOpt) {
-          waOpt.onclick = function(e) {
-            e.preventDefault();
-            window.open(`https://wa.me/${cleanPhone}?text=${message}`, '_blank');
-          };
-        }
-      }
-      updateWhatsAppLinks(phone);
-
-      console.log(`Loaded business: ${name} (ID: ${id}) from ${file}`);
-    })
-    .catch(err => {
-      console.warn(`Could not load data from ${jsonPath}:`, err);
-      // Fallback images are already shown
-    });
-})();
-</script>
-
-<script src="js/main.js" charset="utf-8"></script>
-</body>
-</html>
+<!-- WhatsApp float -->
+<button type="button" class="whatsapp-float" id="whatsappFloat" aria-label="احجز عبر واتساب">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5
